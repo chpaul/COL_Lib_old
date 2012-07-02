@@ -33,10 +33,28 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.4.31904, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\!IncludeFiles\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtomMass.cs" />
+    <Compile Include="Glycan.cs" />
+    <Compile Include="GlycanCompound.cs" />
+    <Compile Include="GlycanMass.cs" />
+    <Compile Include="GlycansDrawer.cs" />
+    <Compile Include="GlycanTreeNode.cs" />
+    <Compile Include="GlycanTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MassLib\MassLib.csproj">
+      <Project>{A9AF2446-C02A-4D05-BBE5-7E823BD073AF}</Project>
+      <Name>MassLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -46,4 +64,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(ProjectDir)$(OutDir)$(TargetFileName)  D:\!SVN\!IncludeFiles</PostBuildEvent>
+  </PropertyGroup>
 </Project>
