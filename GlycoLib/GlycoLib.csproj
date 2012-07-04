@@ -41,13 +41,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtomMass.cs" />
     <Compile Include="Glycan.cs" />
     <Compile Include="GlycanCompound.cs" />
     <Compile Include="GlycanMass.cs" />
     <Compile Include="GlycansDrawer.cs" />
     <Compile Include="GlycanTreeNode.cs" />
-    <Compile Include="GlycanTree.cs" />
+    <Compile Include="GlycanTreeForDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

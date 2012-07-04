@@ -48,16 +48,16 @@
             this.txtFileName.Name = "txtFileName";
             this.txtFileName.Size = new System.Drawing.Size(501, 20);
             this.txtFileName.TabIndex = 1;
-            this.txtFileName.Text = "D:\\Academic\\Data\\N1H1 Glycoprotein\\P_Trypsin_IU_090710_HCD.RAW";
+            this.txtFileName.Text = "D:\\Academic\\Data\\FetuinExample\\Fetuin25MS900-090808-03.RAW";
             // 
-            // Form1
+            // frmTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(525, 284);
             this.Controls.Add(this.txtFileName);
             this.Controls.Add(this.btnReader);
-            this.Name = "Form1";
+            this.Name = "frmTest";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

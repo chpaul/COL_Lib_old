@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using COL.MassLib;
 namespace COL.GlycoLib
 {
     [Serializable]
@@ -85,7 +85,7 @@ namespace COL.GlycoLib
         }
         private void CalcMass()
         {
-            _MonoMass = _Carbon * AtomMass.CarbonMass + _Hydrogen * AtomMass.HydrogenMass + _Nitrogen * AtomMass.NitrogenMass + Oxygen * AtomMass.OxygenMass + Sodium * AtomMass.SodiumMass + _Deuterium * AtomMass.DeuteriumMass;
+            _MonoMass = _Carbon * Atoms.CarbonMass + _Hydrogen * Atoms.HydrogenMass + _Nitrogen * Atoms.NitrogenMass + Oxygen * Atoms.OxygenMass + Sodium * Atoms.SodiumMass + _Deuterium * Atoms.DeuteriumMass;
          }
         public bool isPermethylated
         {

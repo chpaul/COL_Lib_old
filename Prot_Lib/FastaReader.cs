@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 namespace COL.Prot_Lib
 {
-    class FastaReader
+    public class FastaReader
     {
         /// <summary>
         /// Read Fasta file into List<ProteinInfo>

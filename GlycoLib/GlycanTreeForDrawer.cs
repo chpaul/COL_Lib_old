@@ -5,11 +5,11 @@ using System.Text;
 namespace COL.GlycoLib
 {
     [Serializable]    
-    public class GlycanTree
+    public class GlycanTreeForDrawer
     {
         Glycan.Type _root;
-        List<GlycanTree> _child;
-        GlycanTree _parent;
+        List<GlycanTreeForDrawer> _child;
+        GlycanTreeForDrawer _parent;
         float _posX;
         float _posY;
         int _distanceToRoot = 0;
@@ -18,21 +18,21 @@ namespace COL.GlycoLib
             set { _distanceToRoot = value; }
             get { return _distanceToRoot; }
         }
-        public GlycanTree Parent
+        public GlycanTreeForDrawer Parent
         {
             set { _parent = value; }
             get { return _parent; }
         }
-        public GlycanTree()
+        public GlycanTreeForDrawer()
         {
-            _child = new List<GlycanTree>();
+            _child = new List<GlycanTreeForDrawer>();
         }
-        public GlycanTree(Glycan.Type argType)
+        public GlycanTreeForDrawer(Glycan.Type argType)
         {
             _root = argType;
-            _child = new List<GlycanTree>();
+            _child = new List<GlycanTreeForDrawer>();
         }
-        public void AddChild(GlycanTree argType)
+        public void AddChild(GlycanTreeForDrawer argType)
         {
             if (argType.Root == Glycan.Type.DeHex)
             {
@@ -42,7 +42,7 @@ namespace COL.GlycoLib
             {
                 _child.Add(argType);
             }
-            _child.Sort(delegate(GlycanTree p1, GlycanTree p2)
+            _child.Sort(delegate(GlycanTreeForDrawer p1, GlycanTreeForDrawer p2)
             {
                 return p1.GetChild.Count.CompareTo(p2.GetChild.Count);
             });
@@ -52,7 +52,7 @@ namespace COL.GlycoLib
             set { _root = value; }
             get { return _root; }
         }
-        public List<GlycanTree> GetChild
+        public List<GlycanTreeForDrawer> GetChild
         {
             get { return _child; }
         }
@@ -76,7 +76,7 @@ namespace COL.GlycoLib
             get
             {
                 int tmp = 0;
-                foreach (GlycanTree g in _child)
+                foreach (GlycanTreeForDrawer g in _child)
                 {
                     if (g.Root == Glycan.Type.DeHex)
                     {
@@ -91,57 +91,57 @@ namespace COL.GlycoLib
             this._distanceToRoot = argParentDistance + 1;
             if (_child.Count != 0)
             {
-                foreach (GlycanTree CT in _child)
+                foreach (GlycanTreeForDrawer CT in _child)
                 {
                     CT.UpdateDistance(this._distanceToRoot);
                 }
             }
         }
-        public IEnumerable<GlycanTree> TravelGlycanTreeBFS()
+        public IEnumerable<GlycanTreeForDrawer> TravelGlycanTreeBFS()
         {
-            Queue<GlycanTree> GlycanQue = new Queue<GlycanTree>();
-            List<GlycanTree> glycanOrder = new List<GlycanTree>();
+            Queue<GlycanTreeForDrawer> GlycanQue = new Queue<GlycanTreeForDrawer>();
+            List<GlycanTreeForDrawer> glycanOrder = new List<GlycanTreeForDrawer>();
             glycanOrder.Add(this);
 
             if (_child.Count != 0)
             {
-                foreach (GlycanTree g in _child)
+                foreach (GlycanTreeForDrawer g in _child)
                 {
                     GlycanQue.Enqueue(g);
                 }
             }
             while (GlycanQue.Count > 0)
             {
-                GlycanTree g = (GlycanTree)GlycanQue.Dequeue();
+                GlycanTreeForDrawer g = (GlycanTreeForDrawer)GlycanQue.Dequeue();
                 glycanOrder.Add(g);
-                foreach (GlycanTree k in g._child)
+                foreach (GlycanTreeForDrawer k in g._child)
                 {
                     GlycanQue.Enqueue(k);
                 }
             }
-            foreach (GlycanTree g in glycanOrder)
+            foreach (GlycanTreeForDrawer g in glycanOrder)
             {
                 yield return g;
             }
         }
-        public IEnumerable<GlycanTree> TravelGlycanTreeDFS()
+        public IEnumerable<GlycanTreeForDrawer> TravelGlycanTreeDFS()
         {
-            Stack<GlycanTree> GlycanStk = new Stack<GlycanTree>();
-            List<GlycanTree> glycanOrder = new List<GlycanTree>();
+            Stack<GlycanTreeForDrawer> GlycanStk = new Stack<GlycanTreeForDrawer>();
+            List<GlycanTreeForDrawer> glycanOrder = new List<GlycanTreeForDrawer>();
             GlycanStk.Push(this);
 
 
             while (GlycanStk.Count != 0)
             {
-                GlycanTree g = (GlycanTree)GlycanStk.Peek();
+                GlycanTreeForDrawer g = (GlycanTreeForDrawer)GlycanStk.Peek();
                 if (g._child.Count == 0)
                 {
-                    glycanOrder.Add((GlycanTree)GlycanStk.Pop());
+                    glycanOrder.Add((GlycanTreeForDrawer)GlycanStk.Pop());
                 }
                 else
                 {
                     int NoneTravedChild = 0;
-                    foreach (GlycanTree k in g._child)
+                    foreach (GlycanTreeForDrawer k in g._child)
                     {
                         if (!glycanOrder.Contains(k))
                         {
@@ -152,12 +152,12 @@ namespace COL.GlycoLib
                     }
                     if (NoneTravedChild == 0)
                     {
-                        glycanOrder.Add((GlycanTree)GlycanStk.Pop());
+                        glycanOrder.Add((GlycanTreeForDrawer)GlycanStk.Pop());
                     }
                 }
             }
 
-            foreach (GlycanTree g in glycanOrder)
+            foreach (GlycanTreeForDrawer g in glycanOrder)
             {
                 yield return g;
             }

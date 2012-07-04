@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 namespace COL.Prot_Lib
 {
-    class ProteinInfo
+    public class ProteinInfo
     {
         private string _title;
         private string _sequence;

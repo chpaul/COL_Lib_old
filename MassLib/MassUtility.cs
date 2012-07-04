@@ -4,17 +4,21 @@ using System.Text;
 
 namespace COL.MassLib
 {
-    public class Utility
+    public class MassUtility
     {
         public static double GetMassPPM(double argExactMass, double argMeasureMass)
         {
             return Math.Abs(Convert.ToDouble(((argMeasureMass - argExactMass) / argExactMass) * Math.Pow(10.0, 6.0)));
         }
-        public static int GetClosestMassIdx(List<MSPeak> argPeaks, float argMZ)
+        public static double GetMassPPM(float argExactMass, float argMeasureMass)
+        {
+            return Math.Abs(Convert.ToSingle(((argMeasureMass - argExactMass) / argExactMass) * Math.Pow(10.0, 6.0)));
+        }
+        public static int GetClosestMassIdx(List<MSPeak> argPeaks, double argMZ)
         {
             //Convert MSPeaks mz into float[]
             argPeaks.Sort();
-            float[] _cidMzs = new float[argPeaks.Count];
+            double[] _cidMzs = new double[argPeaks.Count];
             for(int i =0; i<argPeaks.Count;i++)
             {
                 _cidMzs[i] = argPeaks[i].MonoisotopicMZ;

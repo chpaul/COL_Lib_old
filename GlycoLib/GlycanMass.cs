@@ -45,6 +45,35 @@ namespace COL.GlycoLib
             }
             return Mass ;
         }
+        public static float GetGlycanMasswithCharge(Glycan.Type argType, int argCharge)
+        {
+            //
+            // m/z = (mass  + Proton * charge) / charge  
+            //     => mass/charge + Proton
+            //
+            float Mass = 0.0f;
+            if (argType == Glycan.Type.HexNAc)
+            {
+                Mass = _HexNAc;
+            }
+            else if (argType == Glycan.Type.Hex)
+            {
+                Mass = _Hex;
+            }
+            else if (argType == Glycan.Type.DeHex)
+            {
+                Mass = _DeHex;
+            }
+            else if (argType == Glycan.Type.NeuAc)
+            {
+                Mass = _NeuAc;
+            }
+            else
+            {
+                Mass = _NeuGc;
+            }
+            return (float)((Mass + argCharge * COL.MassLib.Atoms.ProtonMass) / argCharge - COL.MassLib.Atoms.ProtonMass);
+        }
         public static float GetGlycansMass(GlycanCompound argGlycanComp)
         {
             float Mass = 0.0f;

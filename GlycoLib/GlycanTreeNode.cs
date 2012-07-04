@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using COL.MassLib;
 namespace COL.GlycoLib
 {
     [Serializable]
@@ -12,9 +13,9 @@ namespace COL.GlycoLib
     {
         private int _NodeID;   
         private Glycan.Type _NodeType;
-        private List<GlycanTreeNode> _subTrees;    
-        private float _IDMass = 0.0f;
-        private float _IDIntensity = 0.0f; 
+        private List<GlycanTreeNode> _subTrees;
+        private double _IDMass = 0.0;
+        private double _IDIntensity = 0.0; 
         private int _charge = 0;
         private int _missedpeak = 0;
         private GlycanTreeNode _parent;
@@ -260,7 +261,7 @@ namespace COL.GlycoLib
         {
             get
             {
-                return (float)((GlycanMZ) * _charge - (AtomMass.ProtonMass *_charge));
+                return (float)((GlycanMZ) * _charge - (Atoms.ProtonMass *_charge));
             }
         }
 
@@ -432,12 +433,12 @@ namespace COL.GlycoLib
 
 
 
-        public float IDMass
+        public double IDMass
         {
             set { _IDMass = value; }
             get { return _IDMass; }
         }
-        public float IDIntensity
+        public double IDIntensity
         {
             get { return _IDIntensity; }
         }
@@ -445,11 +446,11 @@ namespace COL.GlycoLib
         {
             get { return _NodeType; }
         }
-        public float Score
+        public double Score
         {
             get
             {
-                float score = _IDIntensity;
+                double score = _IDIntensity;
                 if (this.SubTree1 != null)
                 {
                     score += this.SubTree1.Score;
@@ -1199,7 +1200,7 @@ namespace COL.GlycoLib
             }
             return false;
         }
-        public void IDPeak(float argMS, float argIntensity)
+        public void IDPeak(double argMS, double argIntensity)
         {
             _IDMass = argMS;
             _IDIntensity = argIntensity;

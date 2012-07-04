@@ -4,7 +4,7 @@ using System.Text;
 
 namespace COL.Prot_Lib
 {
-    class FastaFile
+    public class FastaFile
     {
         private string _fastaFullPath;
         private List<ProteinInfo> _proteinInfo;

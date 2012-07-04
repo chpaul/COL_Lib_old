@@ -49,13 +49,12 @@
     <Compile Include="Atoms.cs" />
     <Compile Include="IRawFileReader.cs" />
     <Compile Include="IsotopeProfileHelper.cs" />
-    <Compile Include="MassConstant.cs" />
     <Compile Include="MSPeak.cs" />
     <Compile Include="MSPoint.cs" />
     <Compile Include="MSScan.cs" />
     <Compile Include="mzXMLReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="MassUtility.cs" />
     <Compile Include="XRawReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

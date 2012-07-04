@@ -10,6 +10,9 @@ namespace COL.MassLib
         private List<MSPeak> _lstMsPeak;
         private int _scanNo;
         private int _parentScanNo;
+        private int _parentCharge = 0;
+        private float _parentMz = 0;
+        private float _parentMonoMW = 0;
         private int _msLevel;
         private double _minIntensity;
         private double _maxIntensity;
@@ -45,10 +48,15 @@ namespace COL.MassLib
                 }
             }
         }
-      //  public List<MSPoint> MSPoints
-       // {
-
-        //}
+        public int ParentCharge
+        {
+            get { return _parentCharge; }
+            set { _parentCharge = value; }
+        }
+        public float ParentMZ
+        {
+            get { return _parentMz; }
+        }
         public double Time
         {
             get {return _time;}
@@ -58,6 +66,11 @@ namespace COL.MassLib
         {
             get { return _parentScanNo; }
             set { _parentScanNo = value; }
+        }
+        public float ParentMonoMW
+        {
+            get { return _parentMonoMW; }
+            set { _parentMonoMW = value; }
         }
         public int MsLevel
         {
