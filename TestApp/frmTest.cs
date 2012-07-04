@@ -18,7 +18,9 @@ namespace TestApp
         private void btnReader_Click(object sender, EventArgs e)
         {
             XRawReader raw = new XRawReader(txtFileName.Text);
+            Class1 cs = new Class1(txtFileName.Text, 1861);
             MSScan Scans = raw.ReadScan(1861);
+            
         }
     }
 }

@@ -127,19 +127,14 @@ namespace COL.MassLib
                 if (min_peptide_intensity < mobjTransformParameters.AbsolutePeptideIntensity)
                     min_peptide_intensity = mobjTransformParameters.AbsolutePeptideIntensity;
             }
-            mobjTransform.PerformTransform(Convert.ToSingle(mdbl_current_background_intensity), Convert.ToSingle(min_peptide_intensity), ref _cidMzs, ref _cidIntensities, ref _cidPeaks, ref _transformResult);
-
+            
             // for getting results
             List<MSPeak> _lstPeak = new List<MSPeak>();
-            for (int chNum = 0; chNum < _transformResult.Length; chNum++)
+            for (int chNum = 0; chNum < _cidPeaks.Length; chNum++)
             {
                 _lstPeak.Add(new MSPeak(
-                    _transformResult[chNum].mdbl_mono_mw,
-                    _transformResult[chNum].mint_abundance,
-                    _transformResult[chNum].mshort_cs,
-                    _transformResult[chNum].mdbl_mz,
-                    _transformResult[chNum].mdbl_fit,
-                    _transformResult[chNum].mdbl_most_intense_mw));
+                    _cidPeaks[chNum].mdbl_mz,
+                    _cidPeaks[chNum].mdbl_intensity));            
             }
             //Setup MSScan
             scan.MSPeaks = _lstPeak;
@@ -150,6 +145,7 @@ namespace COL.MassLib
                 _transformResult = null;
                 return scan;
             }
+            mobjTransform.PerformTransform(Convert.ToSingle(mdbl_current_background_intensity), Convert.ToSingle(min_peptide_intensity), ref _cidMzs, ref _cidIntensities, ref _cidPeaks, ref _transformResult);
 
             // Get parent information
             scan.ParentScanNo = Raw.GetParentScan(scan.ScanNo);
@@ -191,10 +187,7 @@ namespace COL.MassLib
             //Setup MSScan
 
             scan.ParentMonoMW= (float)_transformResult[0].mdbl_mono_mw;
-            scan.ParentCharge = (int)_transformResult[0].mshort_cs;
-            
-            
-
+            scan.ParentCharge = (int)_transformResult[0].mshort_cs;          
            _transformResult = null;
             mobjTransform = null;
             return scan;

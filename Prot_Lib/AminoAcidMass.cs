@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace COL.Prot_Lib
+namespace COL.ProtLib
 {
     public class AminoAcidMass
     {

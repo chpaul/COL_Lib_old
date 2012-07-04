@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassLib", "MassLib\MassLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlycoLib", "GlycoLib\GlycoLib.csproj", "{F491280E-32DE-4EC8-97AD-BEBB8EEF8722}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prot_Lib", "Prot_Lib\Prot_Lib.csproj", "{C35DFA3F-CB11-41FB-80C6-A49231D2B413}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtLib", "Prot_Lib\ProtLib.csproj", "{C35DFA3F-CB11-41FB-80C6-A49231D2B413}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{B8B4E9CF-2626-45C1-AD79-E2DB457C92F2}"
 EndProject

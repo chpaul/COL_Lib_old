@@ -47,6 +47,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ProtLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\!IncludeFiles\ProtLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -103,10 +107,6 @@
     <ProjectReference Include="..\MassLib\MassLib.csproj">
       <Project>{A9AF2446-C02A-4D05-BBE5-7E823BD073AF}</Project>
       <Name>MassLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Prot_Lib\Prot_Lib.csproj">
-      <Project>{C35DFA3F-CB11-41FB-80C6-A49231D2B413}</Project>
-      <Name>Prot_Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

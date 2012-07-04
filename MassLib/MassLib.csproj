@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Atoms.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="IRawFileReader.cs" />
     <Compile Include="IsotopeProfileHelper.cs" />
     <Compile Include="MSPeak.cs" />

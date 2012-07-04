@@ -6,7 +6,7 @@ namespace COL.MassLib
 {
     public class MSPeak : IComparable<MSPeak>
     {
-        private double _monoMass;
+        private double _monoMass; //First peak
         private double _monoIntemsity;
         private double _chargeState;
         private double _deisotopeMz;
@@ -21,6 +21,12 @@ namespace COL.MassLib
             _deisotopeMz = argDeisotopeMz;
             _fitScore = argFixScore;
             _mostIntseMass = argMostIntenseMass;
+        }
+
+        public MSPeak(double argMonoMass, double argMonoIntensity)
+        {
+            _monoMass = argMonoMass;
+            _monoIntemsity = argMonoIntensity;
         }
         public double MonoMass
         {

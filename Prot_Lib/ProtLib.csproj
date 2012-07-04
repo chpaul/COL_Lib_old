@@ -8,8 +8,8 @@
     <ProjectGuid>{C35DFA3F-CB11-41FB-80C6-A49231D2B413}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>COL.Prot_Lib</RootNamespace>
-    <AssemblyName>Prot_Lib</AssemblyName>
+    <RootNamespace>COL.ProtLib</RootNamespace>
+    <AssemblyName>ProtLib</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
