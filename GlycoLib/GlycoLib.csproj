@@ -43,17 +43,30 @@
   <ItemGroup>
     <Compile Include="Glycan.cs" />
     <Compile Include="GlycanCompound.cs" />
+    <Compile Include="GlycanImage.cs" />
     <Compile Include="GlycanMass.cs" />
     <Compile Include="GlycansDrawer.cs" />
+    <Compile Include="GlycanStructure.cs" />
     <Compile Include="GlycanTreeNode.cs" />
     <Compile Include="GlycanTreeForDrawer.cs" />
+    <Compile Include="YxList.cs" />
+    <Compile Include="PointMath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructureRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MassLib\MassLib.csproj">
       <Project>{A9AF2446-C02A-4D05-BBE5-7E823BD073AF}</Project>
       <Name>MassLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Prot_Lib\ProtLib.csproj">
+      <Project>{C35DFA3F-CB11-41FB-80C6-A49231D2B413}</Project>
+      <Name>ProtLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FilterRules.txt" />
+    <Content Include="N-Glycan_Rules.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
