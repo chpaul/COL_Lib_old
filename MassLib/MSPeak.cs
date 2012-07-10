@@ -6,14 +6,14 @@ namespace COL.MassLib
 {
     public class MSPeak : IComparable<MSPeak>
     {
-        private double _monoMass; //First peak
-        private double _monoIntemsity;
-        private double _chargeState;
-        private double _deisotopeMz;
-        private double _fitScore;
-        private double _mostIntseMass;
+        private float _monoMass; //First peak
+        private float _monoIntemsity;
+        private float _chargeState;
+        private float _deisotopeMz;
+        private float _fitScore;
+        private float _mostIntseMass;
 
-        public MSPeak(double argMonoMass, double argMonoIntensity, double argChargeState, double argDeisotopeMz, double argFixScore, double argMostIntenseMass)
+        public MSPeak(float argMonoMass, float argMonoIntensity, float argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
@@ -23,32 +23,32 @@ namespace COL.MassLib
             _mostIntseMass = argMostIntenseMass;
         }
 
-        public MSPeak(double argMonoMass, double argMonoIntensity)
+        public MSPeak(float argMonoMass, float argMonoIntensity)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
         }
-        public double MonoMass
+        public float MonoMass
         {
             get { return _monoMass; }
         }
-        public double MonoIntensity
+        public float MonoIntensity
         {
             get { return _monoIntemsity; }
         }
-        public double ChargeState
+        public float ChargeState
         {
             get { return _chargeState; }
         }
-        public double DeisotopeMz
+        public float DeisotopeMz
         {
             get { return _deisotopeMz; }
         }
-        public double FitScore
+        public float FitScore
         {
             get { return _fitScore; }
         }
-        public double MostIntenseMass
+        public float MostIntenseMass
         {
             get { return _mostIntseMass; }
         }

@@ -21,7 +21,72 @@ namespace COL.MassLib
             double[] _cidMzs = new double[argPeaks.Count];
             for(int i =0; i<argPeaks.Count;i++)
             {
-                _cidMzs[i] = argPeaks[i].MonoisotopicMZ;
+                _cidMzs[i] = argPeaks[i].MonoMass;
+            }
+
+            //Find idx use binary search
+            int min = 0;
+            int max = argPeaks.Count - 1;
+            int mid = -1;
+            if (_cidMzs[max] < argMZ)
+            {
+                return max;
+            }
+            if (_cidMzs[min] > argMZ)
+            {
+                return min;
+            }
+            do
+            {
+                mid = min + (max - min) / 2;
+                if (argMZ > _cidMzs[mid])
+                {
+                    min = mid + 1;
+                }
+                else
+                {
+                    max = mid - 1;
+                }
+            } while (min < max);
+
+            mid++;
+            if (mid + 1 > _cidMzs.Length - 1)
+            {
+                return mid;
+            }
+
+
+            if (Math.Abs(_cidMzs[mid] - argMZ) < Math.Abs(_cidMzs[mid + 1] - argMZ))
+            {
+                if (Math.Abs(_cidMzs[mid] - argMZ) < Math.Abs(_cidMzs[mid - 1] - argMZ))
+                {
+                    return mid;
+                }
+                else
+                {
+                    return mid - 1;
+                }
+            }
+            else
+            {
+                if (Math.Abs(_cidMzs[mid + 1] - argMZ) < Math.Abs(_cidMzs[mid - 1] - argMZ))
+                {
+                    return mid + 1;
+                }
+                else
+                {
+                    return mid - 1;
+                }
+            }
+        }
+        public static int GetClosestMassIdx(List<MSPoint> argPeaks, double argMZ)
+        {
+            //Convert MSPeaks mz into float[]
+            argPeaks.Sort();
+            double[] _cidMzs = new double[argPeaks.Count];
+            for (int i = 0; i < argPeaks.Count; i++)
+            {
+                _cidMzs[i] = argPeaks[i].Mass;
             }
 
             //Find idx use binary search

@@ -13,53 +13,53 @@ namespace COL.MassLib
         //O	Oxygen	15.9949141
         //Na	Oxygen	22.989767
 
-        private const double C = 12.000000;
-        private const double H = 1.0078246;
-        private const double O = 15.9949141;
-        private const double N = 14.0030732;
-        private const double Na = 22.989767;
-        private const double D = 2.0141021;
-        private const double Proton = 1.0073;
-        public static double ProtonMass
+        private const float C = 12.000000f;
+        private const float H = 1.0078246f;
+        private const float O = 15.9949141f;
+        private const float N = 14.0030732f;
+        private const float Na = 22.989767f;
+        private const float D = 2.0141021f;
+        private const float Proton = 1.0073f;
+        public static float ProtonMass
         {
             get { return Proton; }
         }
-        public static double DeuteriumMass
+        public static float DeuteriumMass
         {
             get
             {
                 return D;
             }
         }
-        public static double CarbonMass
+        public static float CarbonMass
         {
             get
             {
                 return C;
             }
         }
-        public static double HydrogenMass
+        public static float HydrogenMass
         {
             get
             {
                 return H;
             }
         }
-        public static double OxygenMass
+        public static float OxygenMass
         {
             get
             {
                 return O;
             }
         }
-        public static double NitrogenMass
+        public static float NitrogenMass
         {
             get
             {
                 return N;
             }
         }
-        public static double SodiumMass
+        public static float SodiumMass
         {
             get
             {

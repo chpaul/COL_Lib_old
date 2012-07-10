@@ -93,7 +93,7 @@ namespace COL.MassLib
 
             Raw.GetSpectrum(argScanNo,ref _cidMzs,ref  _cidIntensities);
             scan.MsLevel = Raw.GetMSLevel(argScanNo);
-
+            scan.ParentMZ = (float)Raw.GetParentMz(argScanNo);
             GlypID.HornTransform.clsHornTransformParameters mobjTransformParameters;
             GlypID.Peaks.clsPeakProcessorParameters mobjPeakParameters;
             double mdbl_current_background_intensity;
@@ -133,8 +133,8 @@ namespace COL.MassLib
             for (int chNum = 0; chNum < _cidPeaks.Length; chNum++)
             {
                 _lstPeak.Add(new MSPeak(
-                    _cidPeaks[chNum].mdbl_mz,
-                    _cidPeaks[chNum].mdbl_intensity));            
+                    Convert.ToSingle(_cidPeaks[chNum].mdbl_mz),
+                    Convert.ToSingle(_cidPeaks[chNum].mdbl_intensity)));            
             }
             //Setup MSScan
             scan.MSPeaks = _lstPeak;
@@ -145,7 +145,6 @@ namespace COL.MassLib
                 _transformResult = null;
                 return scan;
             }
-            mobjTransform.PerformTransform(Convert.ToSingle(mdbl_current_background_intensity), Convert.ToSingle(min_peptide_intensity), ref _cidMzs, ref _cidIntensities, ref _cidPeaks, ref _transformResult);
 
             // Get parent information
             scan.ParentScanNo = Raw.GetParentScan(scan.ScanNo);

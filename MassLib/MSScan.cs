@@ -14,11 +14,11 @@ namespace COL.MassLib
         private float _parentMz = 0;
         private float _parentMonoMW = 0;
         private int _msLevel;
-        private double _minIntensity;
-        private double _maxIntensity;
+        private float _minIntensity;
+        private float _maxIntensity;
         private double _time;
-        private double _minMZ;
-        private double _maxMZ;
+        private float _minMZ;
+        private float _maxMZ;
 
         public List<MSPeak> MSPeaks
         {
@@ -56,6 +56,7 @@ namespace COL.MassLib
         public float ParentMZ
         {
             get { return _parentMz; }
+            set { _parentMz = value; }
         }
         public double Time
         {
@@ -77,22 +78,22 @@ namespace COL.MassLib
             get { return _msLevel; }
             set { _msLevel = value; }
         }
-        public double MaxIntensity
+        public float MaxIntensity
         {
             get { return _maxIntensity; }
             set { _maxIntensity = value; }
         }
-        public double MinIntensity
+        public float MinIntensity
         {
             get { return _minIntensity; }
             set { _minIntensity = value; }
         }
-        public double MaxMZ
+        public float MaxMZ
         {
             get { return _maxMZ; }
             set { _maxMZ = value; }
         }
-        public double MinMZ
+        public float MinMZ
         {
             get { return _minMZ; }
             set { _minMZ = value; }
@@ -113,20 +114,20 @@ namespace COL.MassLib
         public MSScan()
         {
             _lstMsPeak = new List<MSPeak>();
-            _minIntensity = 10000000000.0;
-            _minMZ = 10000000000.0;
-            _maxIntensity = -10000000000.0;
-            _maxMZ = -10000000000.0;
+            _minIntensity = 10000000000.0f;
+            _minMZ = 10000000000.0f;
+            _maxIntensity = -10000000000.0f;
+            _maxMZ = -10000000000.0f;
         } 
         public MSScan(int argScanNo)
         {
             _lstMsPeak = new List<MSPeak>();
               _scanNo = argScanNo;
 
-            _minIntensity = 10000000000.0;
-            _minMZ = 10000000000.0;
-            _maxIntensity = -10000000000.0;
-            _maxMZ = -10000000000.0;
+            _minIntensity = 10000000000.0f;
+            _minMZ = 10000000000.0f;
+            _maxIntensity = -10000000000.0f;
+            _maxMZ = -10000000000.0f;
             
         }
 

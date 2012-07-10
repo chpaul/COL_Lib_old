@@ -7,23 +7,23 @@ namespace COL.MassLib
     [Serializable]
     public class MSPoint : IComparable
     {
-        double _mass;
-        double _intensity;
+        float _mass;
+        float _intensity;
         public MSPoint()
         {
         }
-        public MSPoint(double mass, double intensity)
+        public MSPoint(float mass, float intensity)
         {
             _mass = mass;
             _intensity = intensity;
         }
 
-        public double Mass
+        public float Mass
         {
             get { return _mass; }
             set { _mass = value; }
         }
-        public double Intensity
+        public float Intensity
         {
             get { return _intensity; }
             set { _intensity = value; }
