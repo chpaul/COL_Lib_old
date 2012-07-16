@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="GlypIDEngine, Version=2.0.5.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\!IncludeFiles\GlypIDEngine.dll</HintPath>
+      <HintPath>D:\!SVN\!IncludeFiles\GlypIDEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TheoreticalDistribution, Version=1.0.3541.22595, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\!IncludeFiles\TheoreticalDistribution.dll</HintPath>
+      <HintPath>D:\!SVN\!IncludeFiles\TheoreticalDistribution.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

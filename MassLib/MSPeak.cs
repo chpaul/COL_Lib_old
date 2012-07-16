@@ -8,12 +8,21 @@ namespace COL.MassLib
     {
         private float _monoMass; //First peak
         private float _monoIntemsity;
-        private float _chargeState;
+        private int _chargeState=1;
         private float _deisotopeMz;
         private float _fitScore;
         private float _mostIntseMass;
-
-        public MSPeak(float argMonoMass, float argMonoIntensity, float argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass)
+        private float _monoisotopicMZ = 0.0f;
+        /// <summary>
+        /// Full Ms Peak
+        /// </summary>
+        /// <param name="argMonoMass"></param>
+        /// <param name="argMonoIntensity"></param>
+        /// <param name="argChargeState"></param>
+        /// <param name="argDeisotopeMz"></param>
+        /// <param name="argFixScore"></param>
+        /// <param name="argMostIntenseMass"></param>
+        public MSPeak(float argMonoMass, float argMonoIntensity, int argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
@@ -22,11 +31,11 @@ namespace COL.MassLib
             _fitScore = argFixScore;
             _mostIntseMass = argMostIntenseMass;
         }
-
         public MSPeak(float argMonoMass, float argMonoIntensity)
         {
-            _monoMass = argMonoMass;
+            _monoisotopicMZ = argMonoMass;
             _monoIntemsity = argMonoIntensity;
+            
         }
         public float MonoMass
         {
@@ -36,7 +45,7 @@ namespace COL.MassLib
         {
             get { return _monoIntemsity; }
         }
-        public float ChargeState
+        public int ChargeState
         {
             get { return _chargeState; }
         }
@@ -57,7 +66,14 @@ namespace COL.MassLib
         /// </summary>
         public float MonoisotopicMZ
         {
-            get { return Convert.ToSingle((_monoMass + _chargeState * 1.0073) / _chargeState); }
+            get {
+                if (_monoisotopicMZ == 0.0f)
+                {
+                    _monoisotopicMZ =  Convert.ToSingle((_monoMass + _chargeState * Atoms.ProtonMass) / _chargeState); 
+                }
+
+                return _monoisotopicMZ;
+            }
         }
         public int CompareTo(MSPeak obj)
         {
