@@ -143,7 +143,6 @@ namespace COL.MassLib
                     Convert.ToSingle(_transformResult[chNum].mdbl_mono_mw),
                     _transformResult[chNum].mint_mono_intensity,
                     _transformResult[chNum].mshort_cs,
-                    Convert.ToSingle(_transformResult[chNum].mdbl_mz),
                     Convert.ToSingle(_transformResult[chNum].mdbl_fit),
                     Convert.ToSingle(_transformResult[chNum].mdbl_most_intense_mw)));
                 }
@@ -215,6 +214,10 @@ namespace COL.MassLib
            _transformResult = null;
             mobjTransform = null;
             return scan;
+        }
+        public void CloseRaw()
+        {
+            Raw.Close();
         }
     }
 }

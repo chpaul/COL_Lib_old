@@ -37,7 +37,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="ZedGraph, Version=5.1.4.31904, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\!IncludeFiles\ZedGraph.dll</HintPath>
+      <HintPath>D:\!SVN\!IncludeFiles\ZedGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -37,13 +37,13 @@ namespace COL.MassLib
                     {
                         _minMZ = argPeak.MonoisotopicMZ;
                     }
-                    if (argPeak.MostIntenseMass > _maxIntensity)
+                    if (argPeak.MonoIntensity > _maxIntensity)
                     {
-                        _maxIntensity = argPeak.MostIntenseMass;
+                        _maxIntensity = argPeak.MonoIntensity;
                     }
-                    if (argPeak.MostIntenseMass <= _minIntensity)
+                    if (argPeak.MonoIntensity <= _minIntensity)
                     {
-                        _minIntensity = argPeak.MostIntenseMass;
+                        _minIntensity = argPeak.MonoIntensity;
                     }          
                 }
             }
@@ -142,13 +142,13 @@ namespace COL.MassLib
                 {
                     _minMZ = argPeak.MonoisotopicMZ;
                 }
-            if (argPeak.MostIntenseMass > _maxIntensity)
+            if (argPeak.MonoIntensity > _maxIntensity)
                 {
-                    _maxIntensity = argPeak.MostIntenseMass;
+                    _maxIntensity = argPeak.MonoIntensity;
                 }
-            if (argPeak.MostIntenseMass <= _minIntensity)
+            if (argPeak.MonoIntensity <= _minIntensity)
                 {
-                    _minIntensity = argPeak.MostIntenseMass;
+                    _minIntensity = argPeak.MonoIntensity;
                 }                
                 _lstMsPeak.Add(argPeak);
                 _lstMsPeak.Sort();

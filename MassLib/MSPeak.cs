@@ -9,7 +9,6 @@ namespace COL.MassLib
         private float _monoMass; //First peak
         private float _monoIntemsity;
         private int _chargeState=1;
-        private float _deisotopeMz;
         private float _fitScore;
         private float _mostIntseMass;
         private float _monoisotopicMZ = 0.0f;
@@ -22,18 +21,17 @@ namespace COL.MassLib
         /// <param name="argDeisotopeMz"></param>
         /// <param name="argFixScore"></param>
         /// <param name="argMostIntenseMass"></param>
-        public MSPeak(float argMonoMass, float argMonoIntensity, int argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass)
+        public MSPeak(float argMonoMass, float argMonoIntensity, int argChargeState, float argFixScore, float argMostIntenseMass)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
             _chargeState = argChargeState;
-            _deisotopeMz = argDeisotopeMz;
             _fitScore = argFixScore;
             _mostIntseMass = argMostIntenseMass;
         }
         public MSPeak(float argMonoMass, float argMonoIntensity)
         {
-            _monoisotopicMZ = argMonoMass;
+            _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
             
         }
@@ -48,10 +46,6 @@ namespace COL.MassLib
         public int ChargeState
         {
             get { return _chargeState; }
-        }
-        public float DeisotopeMz
-        {
-            get { return _deisotopeMz; }
         }
         public float FitScore
         {
