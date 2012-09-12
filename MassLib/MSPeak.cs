@@ -8,12 +8,13 @@ namespace COL.MassLib
     {
         private float _monoMass; //First peak
         private float _monoIntemsity;
-        private int _chargeState=1;
+        private float _chargeState =1.0f;
+        private float _deisotopeMz;
         private float _fitScore;
         private float _mostIntseMass;
-        private float _monoisotopicMZ = 0.0f;
+
         /// <summary>
-        /// Full Ms Peak
+        /// Mass Scan
         /// </summary>
         /// <param name="argMonoMass"></param>
         /// <param name="argMonoIntensity"></param>
@@ -21,19 +22,25 @@ namespace COL.MassLib
         /// <param name="argDeisotopeMz"></param>
         /// <param name="argFixScore"></param>
         /// <param name="argMostIntenseMass"></param>
-        public MSPeak(float argMonoMass, float argMonoIntensity, int argChargeState, float argFixScore, float argMostIntenseMass)
+        public MSPeak(float argMonoMass, float argMonoIntensity, float argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
             _chargeState = argChargeState;
+            _deisotopeMz = argDeisotopeMz;
             _fitScore = argFixScore;
             _mostIntseMass = argMostIntenseMass;
         }
+        /// <summary>
+        /// Tendens Mass Scan
+        /// </summary>
+        /// <param name="argMonoMass"></param>
+        /// <param name="argMonoIntensity"></param>
         public MSPeak(float argMonoMass, float argMonoIntensity)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
-            
+            _chargeState = 1.0f;
         }
         public float MonoMass
         {
@@ -43,9 +50,13 @@ namespace COL.MassLib
         {
             get { return _monoIntemsity; }
         }
-        public int ChargeState
+        public float ChargeState
         {
             get { return _chargeState; }
+        }
+        public float DeisotopeMz
+        {
+            get { return _deisotopeMz; }
         }
         public float FitScore
         {
@@ -60,14 +71,7 @@ namespace COL.MassLib
         /// </summary>
         public float MonoisotopicMZ
         {
-            get {
-                if (_monoisotopicMZ == 0.0f)
-                {
-                    _monoisotopicMZ =  Convert.ToSingle((_monoMass + _chargeState * Atoms.ProtonMass) / _chargeState); 
-                }
-
-                return _monoisotopicMZ;
-            }
+            get { return Convert.ToSingle((_monoMass + _chargeState * MassLib.Atoms.ProtonMass) / _chargeState); }
         }
         public int CompareTo(MSPeak obj)
         {

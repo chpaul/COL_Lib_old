@@ -7,7 +7,7 @@ namespace COL.MassLib
     /// <summary>
     /// Use GlypIDEngine dll to read Xcalibur RAW (.raw)
     /// </summary>
-    public class XRawReader: IRawFileReader
+    public class XRawReader : IRawFileReader
     {
         private string _fullFilePath;
         private List<MSScan> _scans;
@@ -17,6 +17,21 @@ namespace COL.MassLib
         private double _peakBackgroundRatio = 5.0;
         private double _singleToNoiseRatio = 3.0;
         private short _maxCharge = 10;
+
+
+        GlypID.Peaks.clsPeak[] _cidPeaks = new GlypID.Peaks.clsPeak[1];
+        GlypID.Peaks.clsPeak[] _parentPeaks = new GlypID.Peaks.clsPeak[1];
+
+        GlypID.HornTransform.clsHornTransform mobjTransform;
+        GlypID.HornTransform.clsHornTransformParameters mobjTransformParameters;
+        GlypID.HornTransform.clsHornTransformResults[] _transformResult;
+
+
+        GlypID.Peaks.clsPeakProcessor cidPeakProcessor;
+        GlypID.Peaks.clsPeakProcessorParameters cidPeakParameters;
+
+        GlypID.Peaks.clsPeakProcessor parentPeakProcessor;
+        GlypID.Peaks.clsPeakProcessorParameters parentPeakParameters;
 
         public int NumberOfScans
         {
@@ -46,6 +61,15 @@ namespace COL.MassLib
         {
             _fullFilePath = argFullFilePath;
             Raw = new GlypID.Readers.clsRawData(_fullFilePath, GlypID.Readers.FileType.FINNIGAN);
+
+            mobjTransform = new GlypID.HornTransform.clsHornTransform(); //12KB
+            mobjTransformParameters = new GlypID.HornTransform.clsHornTransformParameters(); //4KB
+            _transformResult = new GlypID.HornTransform.clsHornTransformResults[1];
+            cidPeakProcessor = new GlypID.Peaks.clsPeakProcessor(); //68KB    
+            cidPeakParameters = new GlypID.Peaks.clsPeakProcessorParameters();
+            parentPeakProcessor = new GlypID.Peaks.clsPeakProcessor();
+            parentPeakParameters = new GlypID.Peaks.clsPeakProcessorParameters();
+
         }
         public List<MSScan> ReadScans(int argStart, int argEnd)
         {
@@ -66,6 +90,10 @@ namespace COL.MassLib
             int argEnd = Raw.GetNumScans();
             return ReadScans(argStart, argEnd);
         }
+        public void Close()
+        {
+            Raw.Close();
+        }
         public List<MSScan> ReadScanWMSLevel(int argStart, int argEnd, int argMSLevel)
         {
             _scans = new List<MSScan>();
@@ -80,106 +108,96 @@ namespace COL.MassLib
             return _scans;
         }
 
-        private MSScan GetScanFromFile(int argScanNo)
+        public void GetScanTest(int argScanNo)
         {
-            MSScan scan = new MSScan(argScanNo);
-            float[] _cidMzs = new float[1];
-            float[] _cidIntensities = new float[1];
-            float[] _parentRawMzs = new float[1];
-            float[] _parentRawIntensitys = new float[1];
+            float[] _cidMzs = null;
+            float[] _cidIntensities = null;
+
             GlypID.Peaks.clsPeak[] _cidPeaks;
             GlypID.HornTransform.clsHornTransformResults[] _transformResult;
 
+            Raw.GetSpectrum(argScanNo, ref _cidMzs, ref  _cidIntensities);
 
-            Raw.GetSpectrum(argScanNo,ref _cidMzs,ref  _cidIntensities);
-            scan.MsLevel = Raw.GetMSLevel(argScanNo);
+            double min_peptide_intensity = 0;
 
-            GlypID.HornTransform.clsHornTransformParameters mobjTransformParameters;
-            GlypID.Peaks.clsPeakProcessorParameters mobjPeakParameters;
-            double mdbl_current_background_intensity;
-            GlypID.Peaks.clsPeakProcessor mobj_PeakProcessor;
-            GlypID.HornTransform.clsHornTransform mobjTransform;
-            // Inits
-            mobjTransform = new GlypID.HornTransform.clsHornTransform();
-            mobjTransformParameters = new GlypID.HornTransform.clsHornTransformParameters();
-            mobj_PeakProcessor = new GlypID.Peaks.clsPeakProcessor();
-            mobjPeakParameters = new GlypID.Peaks.clsPeakProcessorParameters();
+
+            double mdbl_current_background_intensity = 0;
+
+
+            // Now find peaks
+            parentPeakParameters.SignalToNoiseThreshold = _singleToNoiseRatio;
+            parentPeakParameters.PeakBackgroundRatio = _peakBackgroundRatio;
+            parentPeakProcessor.SetOptions(parentPeakParameters);
+            parentPeakProcessor.ProfileType = GlypID.enmProfileType.PROFILE;
 
             _cidPeaks = new GlypID.Peaks.clsPeak[1];
+            parentPeakProcessor.DiscoverPeaks(ref _cidMzs, ref _cidIntensities, ref _cidPeaks,
+                                    Convert.ToSingle(mobjTransformParameters.MinMZ), Convert.ToSingle(mobjTransformParameters.MaxMZ), true);
+            mdbl_current_background_intensity = parentPeakProcessor.GetBackgroundIntensity(ref _cidIntensities);
 
-            //MS Level 1
-            // for getting results
-            List<MSPeak> _lstPeak = new List<MSPeak>();
-            double min_peptide_intensity = 0.0;
-            if (scan.MsLevel == 1)
+            // Settings
+            min_peptide_intensity = mdbl_current_background_intensity * mobjTransformParameters.PeptideMinBackgroundRatio;
+            if (mobjTransformParameters.UseAbsolutePeptideIntensity)
             {
-                // Now find peaks
-                mobjPeakParameters.SignalToNoiseThreshold = _singleToNoiseRatio;
-                mobjPeakParameters.PeakBackgroundRatio = _peakBackgroundRatio;
-                mobj_PeakProcessor.SetOptions(mobjPeakParameters);
-                mobj_PeakProcessor.ProfileType = GlypID.enmProfileType.PROFILE;
-                mobj_PeakProcessor.DiscoverPeaks(ref _cidMzs, ref _cidIntensities, ref _cidPeaks,
-                                        Convert.ToSingle(mobjTransformParameters.MinMZ), Convert.ToSingle(mobjTransformParameters.MaxMZ), true);
-                mdbl_current_background_intensity = mobj_PeakProcessor.GetBackgroundIntensity(ref _cidIntensities);
-
-                //  Now perform deisotoping
-                _transformResult = new GlypID.HornTransform.clsHornTransformResults[1];
-                mobjTransformParameters.PeptideMinBackgroundRatio = _peptideMinBackgroundRatio;
-                mobjTransformParameters.MaxCharge = _maxCharge;
-                mobjTransform.TransformParameters = mobjTransformParameters;
-
-                min_peptide_intensity = mdbl_current_background_intensity * mobjTransformParameters.PeptideMinBackgroundRatio;
-                if (mobjTransformParameters.UseAbsolutePeptideIntensity)
-                {
-                    if (min_peptide_intensity < mobjTransformParameters.AbsolutePeptideIntensity)
-                        min_peptide_intensity = mobjTransformParameters.AbsolutePeptideIntensity;
-                }
-            
-                mobjTransform.PerformTransform(Convert.ToSingle(mdbl_current_background_intensity), Convert.ToSingle(min_peptide_intensity), ref _cidMzs, ref _cidIntensities, ref _cidPeaks, ref _transformResult);
-               
-                for (int chNum = 0; chNum < _transformResult.Length; chNum++)
-                {
-                    _lstPeak.Add(new MSPeak(
-                    Convert.ToSingle(_transformResult[chNum].mdbl_mono_mw),
-                    _transformResult[chNum].mint_mono_intensity,
-                    _transformResult[chNum].mshort_cs,
-                    Convert.ToSingle(_transformResult[chNum].mdbl_fit),
-                    Convert.ToSingle(_transformResult[chNum].mdbl_most_intense_mw)));
-                }
+                if (min_peptide_intensity < mobjTransformParameters.AbsolutePeptideIntensity)
+                    min_peptide_intensity = mobjTransformParameters.AbsolutePeptideIntensity;
             }
-            else
-            {
-                // Now find peaks
-                mobjPeakParameters.SignalToNoiseThreshold = _singleToNoiseRatio;
-                mobjPeakParameters.PeakBackgroundRatio = _peakBackgroundRatio;
-                mobj_PeakProcessor.SetOptions(mobjPeakParameters);
-                mobj_PeakProcessor.ProfileType = GlypID.enmProfileType.CENTROIDED;
-                mobj_PeakProcessor.DiscoverPeaks(ref _cidMzs, ref _cidIntensities, ref _cidPeaks,
-                                        Convert.ToSingle(mobjTransformParameters.MinMZ), Convert.ToSingle(mobjTransformParameters.MaxMZ), true);
-                mdbl_current_background_intensity = mobj_PeakProcessor.GetBackgroundIntensity(ref _cidIntensities);
+            mobjTransformParameters.PeptideMinBackgroundRatio = _peptideMinBackgroundRatio;
+            mobjTransformParameters.MaxCharge = _maxCharge;
+            mobjTransform.TransformParameters = mobjTransformParameters;
 
-                 for (int chNum = 0; chNum < _cidPeaks.Length; chNum++)
+
+            //  Now perform deisotoping
+            _transformResult = new GlypID.HornTransform.clsHornTransformResults[1];
+            mobjTransform.PerformTransform(Convert.ToSingle(mdbl_current_background_intensity), Convert.ToSingle(min_peptide_intensity), ref _cidMzs, ref _cidIntensities, ref _cidPeaks, ref _transformResult);
+
+        }
+
+        private MSScan GetScanFromFile(int argScanNo)
+        {
+            MSScan scan = new MSScan(argScanNo);
+            float[] _cidMzs = null;
+            float[] _cidIntensities = null;
+
+            Raw.GetSpectrum(argScanNo, ref _cidMzs, ref  _cidIntensities);
+            scan.MsLevel = Raw.GetMSLevel(argScanNo);
+
+            double min_peptide_intensity = 0;
+            scan.Time = Raw.GetScanTime(scan.ScanNo);
+
+            if (scan.MsLevel != 1)
+            {
+                float[] _parentRawMzs = null;
+                float[] _parentRawIntensitys = null;
+
+                scan.ParentMZ = (float)Raw.GetParentMz(argScanNo);
+                cidPeakProcessor.ProfileType = GlypID.enmProfileType.CENTROIDED;
+                cidPeakProcessor.DiscoverPeaks(ref _cidMzs, ref _cidIntensities, ref _cidPeaks,
+                        Convert.ToSingle(mobjTransformParameters.MinMZ), Convert.ToSingle(mobjTransformParameters.MaxMZ), false);
+
+                for (int chNum = 0; chNum < _cidPeaks.Length; chNum++)
                 {
-                    _lstPeak.Add(new MSPeak(
-                    Convert.ToSingle( _cidPeaks[chNum].mdbl_mz),
-                     Convert.ToSingle(_cidPeaks[chNum].mdbl_intensity)));
+                    scan.MSPeaks.Add(new MSPeak(
+                        Convert.ToSingle(_cidPeaks[chNum].mdbl_mz),
+                        Convert.ToSingle(_cidPeaks[chNum].mdbl_intensity)));
                 }
 
-                //Fetch Parent info
-                GlypID.Peaks.clsPeak[] _parentPeaks = new GlypID.Peaks.clsPeak[1];
-                Raw.GetSpectrum(scan.ParentScanNo, ref _parentRawMzs, ref _parentRawIntensitys);
+                //for (int chNum = 0; chNum < _cidMzs.Length; chNum++)
+                //{
+                //    scan.MSPeaks.Add(new MSPeak(
+                //        Convert.ToSingle(_cidMzs[chNum]),
+                //        Convert.ToSingle(_cidIntensities[chNum])));
+                //}
 
-                GlypID.Peaks.clsPeakProcessor parentPeakProcessor = new GlypID.Peaks.clsPeakProcessor();
+                // Get parent information
+                scan.ParentScanNo = Raw.GetParentScan(scan.ScanNo);
+
+                Raw.GetSpectrum(scan.ParentScanNo, ref _parentRawMzs, ref _parentRawIntensitys);
                 parentPeakProcessor.ProfileType = GlypID.enmProfileType.PROFILE;
                 parentPeakProcessor.DiscoverPeaks(ref _parentRawMzs, ref _parentRawIntensitys, ref _parentPeaks, Convert.ToSingle(mobjTransformParameters.MinMZ), Convert.ToSingle(mobjTransformParameters.MaxMZ), true);
                 float _parentBackgroundIntensity = (float)parentPeakProcessor.GetBackgroundIntensity(ref _parentRawIntensitys);
 
-
-                _transformResult = new GlypID.HornTransform.clsHornTransformResults[1];
                 bool found = mobjTransform.FindPrecursorTransform(Convert.ToSingle(_parentBackgroundIntensity), Convert.ToSingle(min_peptide_intensity), ref _parentRawMzs, ref _parentRawIntensitys, ref _parentPeaks, Convert.ToSingle(scan.ParentMZ), ref _transformResult);
-                
-                scan.ParentScanNo = Raw.GetParentScan(scan.ScanNo);
-                scan.ParentMZ = (float)Raw.GetParentMz(argScanNo);
                 if (Raw.IsFTScan(scan.ParentScanNo))
                 {
                     // High resolution data
@@ -204,20 +222,71 @@ namespace COL.MassLib
                         mobjTransform.AllocateValuesToTransform(Convert.ToSingle(scan.ParentMZ), ref charges, ref _transformResult);
                     }
                 }
-              
                 scan.ParentMonoMW = (float)_transformResult[0].mdbl_mono_mw;
-                scan.ParentCharge = (int)_transformResult[0].mshort_cs;                
+                scan.ParentCharge = (int)_transformResult[0].mshort_cs;
+
+                mobjTransform = null;
+                Array.Clear(_transformResult, 0, _transformResult.Length);
+                Array.Clear(_cidPeaks, 0, _cidPeaks.Length);
+                Array.Clear(_cidMzs, 0, _cidMzs.Length);
+                Array.Clear(_cidIntensities, 0, _cidIntensities.Length);
+                Array.Clear(_parentRawMzs, 0, _parentRawMzs.Length);
+                Array.Clear(_parentRawIntensitys, 0, _parentRawIntensitys.Length);
+                _transformResult = null;
+                _cidPeaks = null;
+                _cidMzs = null;
+                _cidIntensities = null;
+                _parentRawMzs = null;
+                _parentRawIntensitys = null;
             }
-            //Setup MSScan
-            scan.MSPeaks = _lstPeak;
-            scan.Time = Raw.GetScanTime(scan.ScanNo);
-           _transformResult = null;
-            mobjTransform = null;
+            else //MS Scan
+            {
+                scan.ParentMZ = 0.0f;
+                double mdbl_current_background_intensity = 0;
+
+                // Now find peaks
+                parentPeakParameters.SignalToNoiseThreshold = _singleToNoiseRatio;
+                parentPeakParameters.PeakBackgroundRatio = _peakBackgroundRatio;
+                parentPeakProcessor.SetOptions(parentPeakParameters);
+                parentPeakProcessor.ProfileType = GlypID.enmProfileType.PROFILE;
+
+                parentPeakProcessor.DiscoverPeaks(ref _cidMzs, ref _cidIntensities, ref _cidPeaks,
+                                        Convert.ToSingle(mobjTransformParameters.MinMZ), Convert.ToSingle(mobjTransformParameters.MaxMZ), true);
+                mdbl_current_background_intensity = parentPeakProcessor.GetBackgroundIntensity(ref _cidIntensities);
+
+                // Settings
+                min_peptide_intensity = mdbl_current_background_intensity * mobjTransformParameters.PeptideMinBackgroundRatio;
+                if (mobjTransformParameters.UseAbsolutePeptideIntensity)
+                {
+                    if (min_peptide_intensity < mobjTransformParameters.AbsolutePeptideIntensity)
+                        min_peptide_intensity = mobjTransformParameters.AbsolutePeptideIntensity;
+                }
+                mobjTransformParameters.PeptideMinBackgroundRatio = _peptideMinBackgroundRatio;
+                mobjTransformParameters.MaxCharge = _maxCharge;
+                mobjTransform.TransformParameters = mobjTransformParameters;
+
+
+                //  Now perform deisotoping
+                _transformResult = new GlypID.HornTransform.clsHornTransformResults[1];
+                mobjTransform.PerformTransform(Convert.ToSingle(mdbl_current_background_intensity), Convert.ToSingle(min_peptide_intensity), ref _cidMzs, ref _cidIntensities, ref _cidPeaks, ref _transformResult);
+                // for getting results
+
+                for (int chNum = 0; chNum < _transformResult.Length; chNum++)
+                {
+                    scan.MSPeaks.Add(new MSPeak(
+                    Convert.ToSingle(_transformResult[chNum].mdbl_mono_mw),
+                    _transformResult[chNum].mint_mono_intensity,
+                    _transformResult[chNum].mshort_cs,
+                    Convert.ToSingle(_transformResult[chNum].mdbl_mz),
+                    Convert.ToSingle(_transformResult[chNum].mdbl_fit),
+                    Convert.ToSingle(_transformResult[chNum].mdbl_most_intense_mw)));
+                }
+                Array.Clear(_transformResult, 0, _transformResult.Length);
+                Array.Clear(_cidPeaks, 0, _cidPeaks.Length);
+                _cidMzs = null;
+                _cidIntensities = null;
+            }
             return scan;
-        }
-        public void CloseRaw()
-        {
-            Raw.Close();
         }
     }
 }
