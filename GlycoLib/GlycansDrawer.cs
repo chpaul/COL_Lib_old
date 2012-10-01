@@ -16,42 +16,35 @@ namespace COL.GlycoLib
         int MaxXAxis = 0;
         int MaxYAxis = 0;
         bool _isBW = false;
-        int _ScaleFactor = 1;
+        float _ScaleFactor = 1.0f;
         public GlycansDrawer(string argIUPAC)
         {
             _iupac = argIUPAC;
-            ConstructTree();            
-            
+            ConstructTree();                        
             Placement(GTree);            
         }
         public GlycansDrawer(string argIUPAC, bool argIsBW)
         {
             _isBW = argIsBW;
             _iupac = argIUPAC;
-            ConstructTree();
-           
+            ConstructTree();           
             Placement(GTree);      
         }
-        public GlycansDrawer(string argIUPAC, bool argIsBW, int argScaleFactor)
-        {
-            _isBW = argIsBW;
-            _iupac = argIUPAC;
-               
-            _ScaleFactor = argScaleFactor;
-            Interval_X = Interval_X * _ScaleFactor;
-            Interval_Y = Interval_Y * _ScaleFactor;
-            ConstructTree();
-            Placement(GTree);            
-        }
-        public GlycansDrawer(GlycanTreeForDrawer argTree)
+          public GlycansDrawer(GlycanTreeForDrawer argTree)
         {
             GTree = argTree;
             Placement(GTree);
         }
+        
+        public Image GetImage(float argScaleFactor)
+        {
+            _ScaleFactor = argScaleFactor;
+            return GetImage();
+        }
         public Image GetImage()
         {
-            int SizeX = MaxXAxis + 15 * _ScaleFactor;
-            int SizeY = MaxYAxis + 15 * _ScaleFactor;
+            int SizeX = MaxXAxis + 15;
+            int SizeY = MaxYAxis + 15 ;
             Bitmap bmp = new Bitmap(SizeX, SizeY );
             Graphics g = Graphics.FromImage(bmp);
             g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255, 255)), 0, 0, SizeX, SizeY); //white background
@@ -72,8 +65,22 @@ namespace COL.GlycoLib
                     g.DrawImage(GlycanCartoon(T.Root), T.PosX, T.PosY);
                 }
             }
-            
-            return bmp;
+
+            return ResizeImage(bmp, _ScaleFactor);
+        }
+        private Image ResizeImage(Image image, float argPercentage)
+        {
+            int newWidth;
+            int newHeight;
+            newWidth = (int)(image.Width * argPercentage);
+            newHeight = (int)(image.Height * argPercentage);
+            Image newImage = new Bitmap(newWidth, newHeight);
+            using (Graphics graphicsHandle = Graphics.FromImage(newImage))
+            {
+                graphicsHandle.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphicsHandle.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+            return newImage;
         }
         private void AssignColor()
         {
@@ -106,7 +113,7 @@ namespace COL.GlycoLib
         private Image GlycanCartoon(Glycan.Type argType)
         {
 
-            Bitmap glycan = new Bitmap(11 * _ScaleFactor,11 * _ScaleFactor);
+            Bitmap glycan = new Bitmap(11 ,11 );
             Graphics g = Graphics.FromImage(glycan);
 
             Brush SolidBrush;
@@ -120,7 +127,7 @@ namespace COL.GlycoLib
                     {
                         SolidBrush = new SolidBrush(Color.White);
                     }
-                    loc = new Point[] { new Point(0, 10 * _ScaleFactor), new Point(5 * _ScaleFactor, 0), new Point(10 * _ScaleFactor, 10 * _ScaleFactor) };
+                    loc = new Point[] { new Point(0, 10 ), new Point(5 , 0), new Point(10 , 10 ) };
                     g.FillPolygon(SolidBrush, loc);
                     g.DrawPolygon(Linear, loc);
                     break;
@@ -157,7 +164,7 @@ namespace COL.GlycoLib
                     {
                         SolidBrush = new SolidBrush(Color.White);
                     }
-                    loc = new Point[] { new Point(0, 5 * _ScaleFactor), new Point(5 * _ScaleFactor, 10 * _ScaleFactor), new Point(10 * _ScaleFactor, 5 * _ScaleFactor), new Point(5 * _ScaleFactor, 0) };
+                    loc = new Point[] { new Point(0, 5 ), new Point(5 , 10 ), new Point(10 , 5 ), new Point(5 , 0) };
                     g.FillPolygon(SolidBrush, loc);
                     g.DrawPolygon(Linear, loc);
                     break;
@@ -167,7 +174,7 @@ namespace COL.GlycoLib
                     {
                         SolidBrush = new SolidBrush(Color.White);
                     }
-                    loc = new Point[] { new Point(0, 5 * _ScaleFactor), new Point(5 * _ScaleFactor, 10 * _ScaleFactor), new Point(10 * _ScaleFactor, 5 * _ScaleFactor), new Point(5 * _ScaleFactor, 0) };
+                    loc = new Point[] { new Point(0, 5 ), new Point(5 , 10 ), new Point(10 , 5 ), new Point(5 , 0) };
                     g.FillPolygon(SolidBrush, loc);
                     g.DrawPolygon(Linear, loc);
                     break;
@@ -345,8 +352,6 @@ namespace COL.GlycoLib
                     }
                     else if (t.GetChild.Count == 3)
                     {
-
-
                         List<GlycanTreeForDrawer> Fuc = new List<GlycanTreeForDrawer>();
                         List<GlycanTreeForDrawer> NonFuc = new List<GlycanTreeForDrawer>();
                         foreach (GlycanTreeForDrawer Gt in t.GetChild)
@@ -495,501 +500,8 @@ namespace COL.GlycoLib
                     MaxYAxis = Convert.ToInt32(t.PosY);
                 }
             }
-
-
         }
-        public Image GetImage1()
-        {
-
-            int Xinterval = 30;
-            int Y45Interval = Xinterval;
-            int Y60Invetval = (int)Math.Round(Xinterval * 1.414f, 0);
-            int FucYInterval = 150;
-            int SizeX = 500;
-            int SizeY = 500;
-            int BoundX = 0;
-            int BoundY = 0;
-            //3-branch 60 degree (X-130  Y-225)
-            //2-Branch 45 degree (X-130  Y-130)
-            Bitmap bmp = new Bitmap(SizeX, SizeY);
-            Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255, 255)), 0, 0, SizeX, SizeY); //white background
-            int StartPosX = SizeX - 100, StartPosY = SizeY / 2;
-
-            Queue glycans = new Queue();
-            Queue posXY = new Queue();
-            glycans.Enqueue(GTree);
-            posXY.Enqueue(new Point(StartPosX, StartPosY));
-
-            GlycanTreeForDrawer GI;
-            Pen Line = new Pen(Color.Black, 1.0f); //Branch line
-            int MaxXDeapt = SizeX;
-            int MinYTop = SizeY;
-            int MaxYDown = SizeY / 2;
-            do
-            {
-                GI = (GlycanTreeForDrawer)glycans.Dequeue();
-                Point pnt = (Point)posXY.Dequeue();
-
-                #region DrawBranch
-                if (GI.GetChild.Count == 1)
-                {
-                    if (GI.GetChild[0].Root == Glycan.Type.DeHex && GI.GetChild[0].GetChild.Count == 0)
-                    {
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X, pnt.Y - FucYInterval);
-                    }
-                    else
-                    {
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y);
-                    }
-                }
-                else if (GI.GetChild.Count == 2)
-                {
-                    if (GI.GetChild[0].Root == Glycan.Type.DeHex || GI.GetChild[1].Root == Glycan.Type.DeHex)
-                    {
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X, pnt.Y - FucYInterval);
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y);
-                    }
-                    else
-                    {
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y - Y45Interval);
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y + Y45Interval);
-                    }
-                }
-                else if (GI.GetChild.Count == 3)
-                {
-                    if (GI.GetChild[0].Root == Glycan.Type.DeHex || GI.GetChild[1].Root == Glycan.Type.DeHex)
-                    {
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y - Y45Interval);
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X, pnt.Y - FucYInterval);
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y + Y45Interval);
-                    }
-                    else
-                    {
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y - Y60Invetval);
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y);
-                        g.DrawLine(Line, pnt.X, pnt.Y, pnt.X - Xinterval, pnt.Y + Y60Invetval);
-                    }
-                }
-                #endregion
-
-
-                g.DrawImage(GlycanCartoon(GI.Root), pnt.X - 5, pnt.Y - 5); //Draw Glycan
-                if (pnt.X - 50 < MaxXDeapt)
-                {
-                    MaxXDeapt = pnt.X - 50;
-                }
-                if (pnt.Y - 50 > MaxYDown)
-                {
-                    MaxYDown = pnt.Y - 50;
-                }
-                if (pnt.Y - 50 < MinYTop)
-                {
-                    MinYTop = pnt.Y - 50;
-                }
-
-                if (StartPosY - (pnt.Y - Y60Invetval) > BoundY)
-                {
-                    BoundY = StartPosY - (pnt.Y - Y60Invetval);
-                }
-                if (StartPosX - (pnt.X - Xinterval) > BoundX)
-                {
-                    BoundX = StartPosX - (pnt.X - Xinterval);
-                }
-
-
-                #region add child glycan to queue
-                if (GI.GetChild.Count == 1)
-                {
-                    if (GI.GetChild[0].Root == Glycan.Type.DeHex && GI.GetChild[0].GetChild.Count == 0)
-                    {
-                        posXY.Enqueue(new Point(pnt.X, pnt.Y - FucYInterval));
-                    }
-                    else
-                    {
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y));
-                    }
-                    glycans.Enqueue(GI.GetChild[0]);
-
-                }
-                else if (GI.GetChild.Count == 2)
-                {
-                    if (GI.GetChild[0].Root == Glycan.Type.DeHex)
-                    {
-                        posXY.Enqueue(new Point(pnt.X, pnt.Y - FucYInterval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y));
-                        glycans.Enqueue(GI.GetChild[0]);
-                        glycans.Enqueue(GI.GetChild[1]);
-                    }
-                    else if (GI.GetChild[1].Root == Glycan.Type.DeHex)
-                    {
-                        posXY.Enqueue(new Point(pnt.X, pnt.Y - FucYInterval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y));
-                        glycans.Enqueue(GI.GetChild[1]);
-                        glycans.Enqueue(GI.GetChild[0]);
-
-                    }
-                    else
-                    {
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y - Y45Interval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y + Y45Interval));
-                        glycans.Enqueue(GI.GetChild[0]);
-                        glycans.Enqueue(GI.GetChild[1]);
-
-                    }
-                }
-                else if (GI.GetChild.Count == 3)
-                {
-                    if (GI.GetChild[0].Root == Glycan.Type.DeHex)
-                    {
-                        posXY.Enqueue(new Point(pnt.X, pnt.Y - FucYInterval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y - Y45Interval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y + Y45Interval));
-                        glycans.Enqueue(GI.GetChild[0]);
-                        glycans.Enqueue(GI.GetChild[1]);
-                        glycans.Enqueue(GI.GetChild[2]);
-
-                    }
-                    else if (GI.GetChild[1].Root == Glycan.Type.DeHex)
-                    {
-                        posXY.Enqueue(new Point(pnt.X, pnt.Y - FucYInterval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y - Y45Interval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y + Y45Interval));
-                        glycans.Enqueue(GI.GetChild[1]);
-                        glycans.Enqueue(GI.GetChild[0]);
-                        glycans.Enqueue(GI.GetChild[2]);
-
-                    }
-                    else if (GI.GetChild[2].Root == Glycan.Type.DeHex)
-                    {
-                        posXY.Enqueue(new Point(pnt.X, pnt.Y - FucYInterval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y - Y45Interval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y + Y45Interval));
-                        glycans.Enqueue(GI.GetChild[2]);
-                        glycans.Enqueue(GI.GetChild[0]);
-                        glycans.Enqueue(GI.GetChild[1]);
-
-                    }
-                    else
-                    {
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y - Y60Invetval));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y));
-                        posXY.Enqueue(new Point(pnt.X - Xinterval, pnt.Y + Y60Invetval));
-
-                        glycans.Enqueue(GI.GetChild[0]);
-                        glycans.Enqueue(GI.GetChild[2]);
-                        glycans.Enqueue(GI.GetChild[1]);
-
-
-                    }
-                }
-                #endregion
-
-
-            } while (glycans.Count != 0);
-
-            int PicWidth = SizeX - MaxXDeapt + 250;
-            int PicHight = MaxYDown - MinYTop + 200;
-            Bitmap reSize = new Bitmap(PicWidth, PicHight);
-
-            Rectangle Desc = new Rectangle(0, 0, reSize.Width, reSize.Height);
-            Rectangle Src = new Rectangle(MaxXDeapt - 50, MinYTop - 50, reSize.Width, reSize.Height);
-            Graphics.FromImage(reSize).DrawImage(bmp, Desc, Src, GraphicsUnit.Pixel);
-
-            return reSize;
-        }
-        //private void oldplacement()
-        //{
-        //    //Assign Level
-        //    Queue Qglycans = new Queue();
-        //    Qglycans.Enqueue(GTree);
-        //    int MaxLevel = 0;
-        //    int MaxWide = 0;
-        //    Hashtable LevelWide = new Hashtable();
-        //    LevelWide.Add(1, 1);
-        //    do
-        //    {
-        //        GlycanTree GT = (GlycanTree)Qglycans.Dequeue();
-        //        if (GT.Level == 0)
-        //        {
-        //            GT.Level = 1;
-        //        }
-        //        if (GT.GetChild.Count != 0)
-        //        {
-        //            foreach (GlycanTree childT in GT.GetChild)
-        //            {
-        //                if (childT.Root == GlycanTree.GlycanType.Fuc)
-        //                {
-        //                    childT.Level = GT.Level;
-        //                }
-        //                else
-        //                {
-        //                    childT.Level = GT.Level + 1;
-        //                    if (childT.Level > MaxLevel)
-        //                    {
-        //                        MaxLevel = childT.Level;
-        //                    }
-        //                }
-        //                if (LevelWide.ContainsKey(childT.Level))
-        //                {
-        //                    LevelWide[childT.Level] = (int)(LevelWide[childT.Level]) + 1;
-        //                }
-        //                else
-        //                {
-        //                    LevelWide.Add(childT.Level, 1);
-        //                }
-        //                Qglycans.Enqueue(childT);
-        //            }
-        //        }
-        //    } while (Qglycans.Count != 0);
-
-
-        //    //Assign Pos X and Pos Y
-        //    Qglycans.Enqueue(GTree);
-        //    do
-        //    {
-        //        GlycanTree GT = (GlycanTree)Qglycans.Dequeue();
-        //        GT.PosX = 10 + Interval_X * (MaxLevel - GT.Level);
-        //        GT.PosY = 0;
-        //        if (GT.GetChild.Count == 1)
-        //        {
-        //            GlycanTree childT = GT.GetChild[0];
-        //            if (childT.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT.PosX = GT.PosX;
-        //                childT.PosY = GT.PosY - Interval_Fuc;
-
-        //            }
-        //            else
-        //            {
-        //                childT.PosX = GT.PosX - Interval_X;
-        //                childT.PosY = GT.PosY;
-        //            }
-        //            Qglycans.Enqueue(childT);
-        //        }
-        //        else if (GT.GetChild.Count == 2)
-        //        {
-        //            GlycanTree childT1 = GT.GetChild[0];
-        //            GlycanTree childT2 = GT.GetChild[1];
-        //            if (childT1.Root == GlycanTree.GlycanType.Fuc && childT2.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT1.PosX = GT.PosX;
-        //                childT1.PosY = GT.PosY - Interval_Fuc;
-        //                childT2.PosX = GT.PosX;
-        //                childT2.PosY = GT.PosY + Interval_Fuc;
-
-        //            }
-        //            else if (childT1.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT1.PosX = GT.PosX;
-        //                childT1.PosY = GT.PosY - Interval_Fuc;
-        //                childT2.PosX = GT.PosX - Interval_X;
-        //                childT2.PosY = GT.PosY;
-        //            }
-        //            else if (childT2.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT1.PosX = GT.PosX - Interval_X;
-        //                childT1.PosY = GT.PosY;
-        //                childT2.PosX = GT.PosX;
-        //                childT2.PosY = GT.PosY - Interval_Fuc;
-        //            }
-        //            else
-        //            {
-        //                AsignPosY2Nodes(GT);
-        //            }
-        //            Qglycans.Enqueue(childT1);
-        //            Qglycans.Enqueue(childT2);
-        //        }
-        //        else if (GT.GetChild.Count == 3)
-        //        {
-        //            GlycanTree childT1 = GT.GetChild[0];
-        //            GlycanTree childT2 = GT.GetChild[1];
-        //            GlycanTree childT3 = GT.GetChild[2];
-
-        //            if (childT1.Root == GlycanTree.GlycanType.Fuc && childT2.Root == GlycanTree.GlycanType.Fuc && childT3.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT1.PosX = GT.PosX;
-        //                childT2.PosX = GT.PosX;
-        //                childT3.PosX = GT.PosX - Interval_Fuc;
-        //                childT1.PosY = GT.PosY - Interval_Fuc;
-        //                childT2.PosY = GT.PosY + Interval_Fuc;
-        //                childT3.PosY = GT.PosY;
-
-        //            }
-        //            else if (childT1.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT1.PosX = GT.PosX;
-        //                childT1.PosY = GT.PosY - Interval_Fuc;
-        //                if (childT2.Root == GlycanTree.GlycanType.Fuc)
-        //                {
-        //                    childT2.PosX = GT.PosX;
-        //                    childT2.PosY = GT.PosY + Interval_Fuc;
-        //                    childT3.PosX = GT.PosX - Interval_X;
-        //                    childT3.PosY = GT.PosY;
-        //                }
-        //                else if (childT3.Root == GlycanTree.GlycanType.Fuc)
-        //                {
-        //                    childT2.PosX = GT.PosX - Interval_X;
-        //                    childT2.PosY = GT.PosY;
-        //                    childT3.PosX = GT.PosX;
-        //                    childT3.PosY = GT.PosY + Interval_Fuc;
-        //                }
-        //                else
-        //                {
-        //                    AsignPosY2Nodes(GT); //child 2,3
-        //                }
-        //            }
-        //            else if (childT2.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                childT2.PosX = GT.PosX;
-        //                childT2.PosY = GT.PosY - Interval_Fuc;
-        //                if (childT3.Root == GlycanTree.GlycanType.Fuc)
-        //                {
-        //                    childT3.PosX = GT.PosX;
-        //                    childT3.PosY = GT.PosY + Interval_Fuc;
-        //                    childT1.PosX = GT.PosX - Interval_X;
-        //                    childT1.PosY = GT.PosY;
-        //                }
-        //                else
-        //                {
-        //                    AsignPosY2Nodes(GT); // child 1, 3 
-        //                }
-        //            }
-        //            else
-        //            {
-        //                AsignPosY3Nodes(GT); //child 1,2,3
-        //            }
-        //            Qglycans.Enqueue(childT1);
-        //            Qglycans.Enqueue(childT2);
-        //            Qglycans.Enqueue(childT3);
-        //        }
-        //        else if (GT.GetChild.Count == 4)
-        //        {
-        //            GlycanTree childT1 = GT.GetChild[0];
-        //            GlycanTree childT2 = GT.GetChild[1];
-        //            GlycanTree childT3 = GT.GetChild[2];
-        //            GlycanTree childT4 = GT.GetChild[3];
-        //            if (childT1.Root == GlycanTree.GlycanType.Fuc)
-        //            {
-        //                if (childT2.Root == GlycanTree.GlycanType.Fuc)
-        //                {
-        //                    if (childT3.Root == GlycanTree.GlycanType.Fuc)
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-        //                            childT1.PosX = GT.PosX;
-        //                            childT1.PosY = GT.PosY - Interval_Fuc;
-        //                            childT2.PosX = GT.PosX;
-        //                            childT2.PosY = GT.PosY + Interval_Fuc;
-        //                            childT3.PosX = GT.PosX - Interval_X;
-        //                            childT3.PosY = GT.PosY - Interval_Y;
-        //                            childT4.PosX = GT.PosX - Interval_X;
-        //                            childT4.PosY = GT.PosY + Interval_Y;
-        //                        }
-        //                        else
-        //                        {
-        //                            childT1.PosX = GT.PosX;
-        //                            childT1.PosY = GT.PosY - Interval_Fuc;
-        //                            childT2.PosX = GT.PosX;
-        //                            childT2.PosY = GT.PosY + Interval_Fuc;
-        //                            childT3.PosX = GT.PosX - Interval_X;
-        //                            childT3.PosY = GT.PosY - Interval_Y;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-        //                        }
-        //                        else
-        //                        {
-        //                        }
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    if (childT3.Root == GlycanTree.GlycanType.Fuc)
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-        //                        }
-        //                        else
-        //                        {
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-        //                        }
-        //                        else
-        //                        {
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (childT2.Root == GlycanTree.GlycanType.Fuc)
-        //                {
-        //                    if (childT3.Root == GlycanTree.GlycanType.Fuc)
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-
-        //                        }
-        //                        else
-        //                        {
-
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-
-        //                        }
-        //                        else
-        //                        {
-
-        //                        }
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    if (childT3.Root == GlycanTree.GlycanType.Fuc)
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-
-        //                        }
-        //                        else
-        //                        {
-
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (childT4.Root == GlycanTree.GlycanType.Fuc)
-        //                        {
-
-        //                        }
-        //                        else
-        //                        {
-
-        //                        }
-        //                    }
-        //                }
-        //            }
-
-        //        }
-        //        /*Qglycans.Enqueue(childT1);
-        //        Qglycans.Enqueue(childT2);
-        //        Qglycans.Enqueue(childT3);
-        //        Qglycans.Enqueue(childT4);*/
-
-        //    } while (Qglycans.Count != 0);
-        //}
+       
         private GlycanTreeForDrawer ConnectTree(List<GlycanTreeForDrawer> argList)
         {
             GlycanTreeForDrawer Tree = argList[0];

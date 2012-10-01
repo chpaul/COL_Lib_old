@@ -19,27 +19,31 @@ namespace COL.GlycoLib
         private MSPoint _y1;
         private List<GlycanTreeNode> _fragment;
         private int _nextID =1;
+        private string _IUPAC = "";
         //Constrator
         public GlycanStructure(Glycan argGlycan)
         {
-            new GlycanStructure(argGlycan, 0.0f);
+            new GlycanStructure(argGlycan, 0.0f);           
         }
         public GlycanStructure(Glycan argGlycan, float argY1)
         {
             _tree = new GlycanTreeNode(argGlycan.GlycanType, _nextID);
             _nextID++;
             _y1 = new MSPoint(argY1, 0.0f);
+            _IUPAC = _tree.GetIUPACString();
         }
         public GlycanStructure(Glycan argGlycan, MSPoint argPeak)
         {
             _tree = new GlycanTreeNode(argGlycan.GlycanType, _nextID);
             _nextID++;
             _y1 = argPeak;
+            _IUPAC = _tree.GetIUPACString();
         }
         public GlycanStructure(GlycanTreeNode argGlycan)
         {
             _tree = argGlycan;
             _nextID = argGlycan.NoOfTotalGlycan + 1;
+            _IUPAC = _tree.GetIUPACString();
         }
         //Properties
         public GlycanTreeNode Root
@@ -127,12 +131,20 @@ namespace COL.GlycoLib
                 argAddTree.Parent = Parent;
                 Parent.AddGlycanSubTree(argAddTree);
                // Parent.UpdateGlycans();
-                Parent.SortSubTree();                
+                Parent.SortSubTree();
+                _IUPAC = _tree.GetIUPACString();
             }
         }
         public string IUPACString
         {
-            get { return _tree.GetIUPACString(); }
+            get {
+                if (_IUPAC == "")
+                {
+                    _IUPAC = _tree.GetIUPACString();
+                }
+
+                return _IUPAC;
+            }
         }
         public float GlycanMZ
         {
@@ -153,13 +165,29 @@ namespace COL.GlycoLib
                 return (float)((GlycanMZ) * _tree.Charge - (MassLib.Atoms.ProtonMass * _tree.Charge));
             }
         }
+        public int NoOfGlycan(Glycan argGlycan)
+        {
+            switch (argGlycan.GlycanType)
+            {
+                case Glycan.Type.HexNAc:
+                    return NoOfHex;
+                case Glycan.Type.NeuAc:
+                    return NoOfNeuAc;
+                case Glycan.Type.NeuGc:
+                    return NoOfNeuGc;
+                case Glycan.Type.DeHex:
+                    return NoOfDeHex;
+                default:
+                    return NoOfHex;
+            }
+        }
         public int NoOfTotalGlycan
         {
             get
             {
                 return _tree.NoOfTotalGlycan;
             }
-        }
+        }        
         public int NoOfHexNac
         {
             get
@@ -377,6 +405,34 @@ namespace COL.GlycoLib
             node = node.Replace("(", "").Replace(")", "");
             return Convert.ToInt32(node);
         }
+        public string GetIUPACfromParentToNodeID(int argNodeID)
+        {
+            string strTree = "";
+            string strSub1 = "";
+            string strSub2 = "";
+            string strSub3 = "";
+            string strSub4 = "";
+            if (_tree.SubTree1 != null && _tree.SubTree1.NodeID < argNodeID)
+            {
+                strSub1 = _tree.SubTree1.GetIUPACString() + "-";
+            }
+            if (_tree.SubTree2 != null && _tree.SubTree2.NodeID < argNodeID)
+            {
+                strSub2 = "(" + _tree.SubTree2.GetIUPACString() + "-)";
+            }
+
+            if (_tree.SubTree3 != null && _tree.SubTree3.NodeID < argNodeID)
+            {
+                strSub3 = "(" + _tree.SubTree3.GetIUPACString() + "-)";
+            }
+
+            if (_tree.SubTree4 != null && _tree.SubTree4.NodeID < argNodeID)
+            {
+                strSub4 = "(" + _tree.SubTree4.GetIUPACString() + "-)";
+            }
+            strTree = strSub1 + strSub2 + strSub3 + strSub4 + _tree.Node.ToString();
+            return strTree;
+        }
         public bool HasNGlycanCore()
         {
             if (this.NoOfHexNac >= 2 && this.NoOfHex >= 3)
@@ -394,60 +450,60 @@ namespace COL.GlycoLib
                     return false;
                 }
                 //Old Segament
-                if (_tree.GlycanType == Glycan.Type.HexNAc &&
-                    _tree.SubTree1.GlycanType == Glycan.Type.HexNAc && _tree.Subtrees.Count==1  &&  _tree.SubTree1.SubTree1.GlycanType == Glycan.Type.Hex )
-                {
-                    if(_tree.Subtrees.Count>1)
-                    {
-                        foreach(GlycanTreeNode T in _tree.Subtrees)
-                        {
-                            if(!(T.GlycanType == Glycan.Type.DeHex || T.GlycanType == Glycan.Type.HexNAc))
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                    if (!((_tree.SubTree1.SubTree1.Subtrees.Count == 2 &&
-                        _tree.SubTree1.SubTree1.SubTree1 != null && _tree.SubTree1.SubTree1.SubTree1.GlycanType == Glycan.Type.Hex &&
-                        _tree.SubTree1.SubTree1.SubTree2 != null && _tree.SubTree1.SubTree1.SubTree2.GlycanType == Glycan.Type.Hex)
-                        ||
-                        (_tree.SubTree1.SubTree1.Subtrees.Count == 3 && 
-                        _tree.SubTree1.SubTree1.NoOfHexInChild ==2 && _tree.SubTree1.SubTree1.NoOfHexNac==1))
+                //if (_tree.GlycanType == Glycan.Type.HexNAc &&
+                //    _tree.SubTree1.GlycanType == Glycan.Type.HexNAc && _tree.Subtrees.Count==1  &&  _tree.SubTree1.SubTree1.GlycanType == Glycan.Type.Hex )
+                //{
+                //    if(_tree.Subtrees.Count>1)
+                //    {
+                //        foreach(GlycanTreeNode T in _tree.Subtrees)
+                //        {
+                //            if(!(T.GlycanType == Glycan.Type.DeHex || T.GlycanType == Glycan.Type.HexNAc))
+                //            {
+                //                return false;
+                //            }
+                //        }
+                //    }
+                //    if (!((_tree.SubTree1.SubTree1.Subtrees.Count == 2 &&
+                //        _tree.SubTree1.SubTree1.SubTree1 != null && _tree.SubTree1.SubTree1.SubTree1.GlycanType == Glycan.Type.Hex &&
+                //        _tree.SubTree1.SubTree1.SubTree2 != null && _tree.SubTree1.SubTree1.SubTree2.GlycanType == Glycan.Type.Hex)
+                //        ||
+                //        (_tree.SubTree1.SubTree1.Subtrees.Count == 3 && 
+                //        _tree.SubTree1.SubTree1.NoOfHexInChild ==2 && _tree.SubTree1.SubTree1.NoOfHexNac==1))
                         
-                        )
-                    {
-                        return false;
-                    }
+                //        )
+                //    {
+                //        return false;
+                //    }
 
 
 
-                    if( _tree.SubTree1.SubTree1.Subtrees.Count>2)
-                    {
-                        int NoOfHexNAc = 0;
-                        int NoOfHex = 0;
-                        foreach(GlycanTreeNode T in this.GetNodeinLevel(3))
-                        {
-                            if (T.GlycanType == Glycan.Type.HexNAc)
-                            {
-                                NoOfHexNAc++;
-                            }
-                            if (T.GlycanType == Glycan.Type.Hex)
-                            {
-                                NoOfHex++;
-                            }
-                        }
-                        if (NoOfHex < 2)
-                        {
-                            return false;
-                        }
-                    }
+                //    if( _tree.SubTree1.SubTree1.Subtrees.Count>2)
+                //    {
+                //        int NoOfHexNAc = 0;
+                //        int NoOfHex = 0;
+                //        foreach(GlycanTreeNode T in this.GetNodeinLevel(3))
+                //        {
+                //            if (T.GlycanType == Glycan.Type.HexNAc)
+                //            {
+                //                NoOfHexNAc++;
+                //            }
+                //            if (T.GlycanType == Glycan.Type.Hex)
+                //            {
+                //                NoOfHex++;
+                //            }
+                //        }
+                //        if (NoOfHex < 2)
+                //        {
+                //            return false;
+                //        }
+                //    }
 
-                    return true;
-                }            
+                //    return true;
+                //}            
             }
             return false;
         }
- 
+        
         public static List<GlycanTreeNode> FragementGlycanTree(GlycanTreeNode argTree)
         {
             List<GlycanTreeNode> _fragment = new List<GlycanTreeNode>();

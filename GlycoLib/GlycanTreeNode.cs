@@ -105,7 +105,6 @@ namespace COL.GlycoLib
                         GlycanQue.Enqueue(k);
                     }
                 }
-
             }
             foreach (GlycanTreeNode g in glycanOrder)
             {
@@ -398,7 +397,7 @@ namespace COL.GlycoLib
         {
             bool _foundHexNAc =false;            
             GlycanTreeNode Parent=this.Parent;            
-            for (int i = this.DistanceRoot-1; i > 3; i--)
+            while(Parent.DistanceRoot>=2)
             {
                 if (Parent.GlycanType == Glycan.Type.HexNAc)
                 {
@@ -514,6 +513,66 @@ namespace COL.GlycoLib
 
         public void SortSubTree()
         {
+            //if (this.Subtrees.Count > 1)
+            //{
+            //    int[] SortedIdx  = new int[this.Subtrees.Count];
+            //    int[] NoOfGlycanWithoutFuc = new int[this.Subtrees.Count];
+            //    float[] GlycanMassWithoutFuc = new float[this.Subtrees.Count];
+
+            //    int tmpIdx;
+            //    int tmpNoGLycan;
+            //    float tmpMass;
+            //    for(int i =0;i<this.Subtrees.Count;i++)
+            //    {
+            //        SortedIdx[i] = 0;
+            //        NoOfGlycanWithoutFuc[i] = this.Subtrees[i].NoOfTotalGlycan - this.Subtrees[i].NoOfDeHexInChild;
+            //        GlycanMassWithoutFuc[i] = this.Subtrees[i].NoOfHex * GlycanMass.GetGlycanMass(Glycan.Type.Hex) +
+            //                                                         this.Subtrees[i].NoOfHexNac * GlycanMass.GetGlycanMass(Glycan.Type.HexNAc) +
+            //                                                          this.Subtrees[i].NoOfNeuAc * GlycanMass.GetGlycanMass(Glycan.Type.NeuAc) +
+            //                                                           this.Subtrees[i].NoOfNeuGc * GlycanMass.GetGlycanMass(Glycan.Type.NeuGc);
+            //    }
+            //    for (int i = 0; i < SortedIdx.Length-1; i++)
+            //    {
+            //        for (int j = i + 1; j < SortedIdx.Length; j++)
+            //        {
+            //            if (NoOfGlycanWithoutFuc[i] < NoOfGlycanWithoutFuc[j])
+            //            {
+            //                tmpIdx = SortedIdx[i];
+            //                SortedIdx[i] = SortedIdx[j];
+            //                SortedIdx[j] = tmpIdx;
+
+            //                tmpNoGLycan = NoOfGlycanWithoutFuc[i];
+            //                NoOfGlycanWithoutFuc[i] = NoOfGlycanWithoutFuc[j];
+            //                NoOfGlycanWithoutFuc[j] = tmpNoGLycan;
+
+            //                tmpMass = GlycanMassWithoutFuc[i];
+            //                GlycanMassWithoutFuc[i] = GlycanMassWithoutFuc[j];
+            //                GlycanMassWithoutFuc[j] = tmpMass;
+            //            }
+            //            else if (NoOfGlycanWithoutFuc[i]  == NoOfGlycanWithoutFuc[j] &&
+            //                        GlycanMassWithoutFuc[i] < GlycanMassWithoutFuc[j])
+            //            {
+            //                tmpIdx = SortedIdx[i];
+            //                SortedIdx[i] = SortedIdx[j];
+            //                SortedIdx[j] = tmpIdx;
+
+            //                tmpNoGLycan = NoOfGlycanWithoutFuc[i];
+            //                NoOfGlycanWithoutFuc[i] = NoOfGlycanWithoutFuc[j];
+            //                NoOfGlycanWithoutFuc[j] = tmpNoGLycan;
+
+            //                tmpMass = GlycanMassWithoutFuc[i];
+            //                GlycanMassWithoutFuc[i] = GlycanMassWithoutFuc[j];
+            //                GlycanMassWithoutFuc[j] = tmpMass;
+            //            }
+            //        }
+            //    }
+            //    List<GlycanTreeNode> SortedSubTree = new List<GlycanTreeNode>();
+            //    for (int i = 0; i < SortedIdx.Length; i++)
+            //    {
+            //        SortedSubTree.Add(this.Subtrees[SortedIdx[i]]);
+            //    }
+            //    _subTrees = SortedSubTree;
+            //}
             foreach (GlycanTreeNode GT in this.FetchAllGlycanNode())
             {
                 if (GT.GetChildren() != null && GT.GetChildren().Count > 1)
@@ -523,22 +582,6 @@ namespace COL.GlycoLib
                         return -1 * p1.NoOfTotalGlycan.CompareTo(p2.NoOfTotalGlycan);
                     });
                 }
-                //if (GT.DistanceRoot == 2 && GT.Subtrees!=null && GT.Subtrees.Count == 3 && GT.SubTree2.GlycanType!= Glycan.Types.HexNAc) // Move HexNAc to middle
-                //{
-                     
-                //    if (GT.SubTree1.GlycanType == Glycan.Types.HexNAc)
-                //    {
-                //       GlycanTreeNode tmpTree = GT.SubTree1;
-                //       GT.Subtrees.RemoveAt(0);
-                //       GT.Subtrees.Insert(1, tmpTree);
-                //    }
-                //    else //At position 3
-                //    {
-                //        GlycanTreeNode tmpTree = GT.SubTree3;
-                //        GT.Subtrees.RemoveAt(2);
-                //        GT.Subtrees.Insert(1, tmpTree);
-                //    }
-                //}
             }
             for (int i = _subTrees.Count - 2; i >= 0; i--)//Move Fucose to the end of subtree list
             {
@@ -1005,6 +1048,16 @@ namespace COL.GlycoLib
             }
             return lstGlycansT;
         }
+        public float GetMonoMassForGlycanTree(GlycanTreeNode argTree)
+        {
+            float SUM = 0.0f;
+            SUM = argTree.NoOfDeHex * GlycanMass.GetGlycanMass(Glycan.Type.DeHex);
+            SUM = SUM + argTree.NoOfHex * GlycanMass.GetGlycanMass(Glycan.Type.Hex);
+            SUM = SUM + argTree.NoOfHexNac * GlycanMass.GetGlycanMass(Glycan.Type.HexNAc);
+            SUM = SUM + argTree.NoOfNeuAc * GlycanMass.GetGlycanMass(Glycan.Type.NeuAc);
+            SUM = SUM + argTree.NoOfNeuGc * GlycanMass.GetGlycanMass(Glycan.Type.NeuGc);
+            return SUM;
+        }
         public string GetIUPACString()
         {
             string strTree = "";
@@ -1012,25 +1065,184 @@ namespace COL.GlycoLib
             string strSub2 = "";
             string strSub3 = "";
             string strSub4 = "";
-            if (this.SubTree1 != null)
-            {
-                strSub1 = this.SubTree1.GetIUPACString() + "-";
-            }
-            if (this.SubTree2 != null)
-            {
-                strSub2 = "(" + this.SubTree2.GetIUPACString() + "-)";
-            }
 
-            if (this.SubTree3 != null)
+            if (this.DistanceRoot == 2 && this.Subtrees != null && this.Subtrees.Count > 1)
             {
-                strSub3 = "(" + this.SubTree3.GetIUPACString() + "-)";
+                int[] GlycanCount = new int[this.Subtrees.Count];
+                int BisectingHexNacIdx = -1; //Bisecting
+                for (int i = 0; i < this.Subtrees.Count; i++)
+                {
+                    GlycanCount[i] = this.Subtrees[i].NoOfTotalGlycan - this.Subtrees[i].NoOfDeHex;
+                    if (this.Subtrees[i].Node == Glycan.Type.HexNAc)
+                    {
+                        BisectingHexNacIdx = i; //Bisecting
+                    }
+                }
+                if (GlycanCount.Length == 3)
+                {
+                    strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
+                    if (BisectingHexNacIdx == 0)
+                    {
+                        if (GlycanCount[1] > GlycanCount[2])
+                        {
+                            strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                            strSub3 = "(" + this.Subtrees[2].GetIUPACString() + "-)";
+                        }
+                        else if (GlycanCount[1] < GlycanCount[2])
+                        {
+                            strSub1 = this.Subtrees[2].GetIUPACString() + "-";
+                            strSub3 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                        }
+                        else
+                        {
+                            if (GetMonoMassForGlycanTree(this.Subtrees[1]) > GetMonoMassForGlycanTree(this.Subtrees[2]))
+                            {
+                                strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                                strSub3 = "(" + this.Subtrees[2].GetIUPACString() + "-)";
+                            }
+                            else
+                            {
+                                strSub1 = this.Subtrees[2].GetIUPACString() + "-";
+                                strSub3 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                            }
+                        }
+                    }
+                    else if (BisectingHexNacIdx == 1)
+                    {
+                        if (GlycanCount[0] > GlycanCount[2])
+                        {
+                            strSub1 = this.Subtrees[0].GetIUPACString() + "-";
+                            strSub3 = "(" + this.Subtrees[2].GetIUPACString() + "-)";
+                        }
+                        else if (GlycanCount[0] < GlycanCount[2])
+                        {
+                            strSub1 = this.Subtrees[2].GetIUPACString() + "-";
+                            strSub3 = "(" + this.Subtrees[0].GetIUPACString() + "-)";
+                        }
+                        else
+                        {
+                            if (GetMonoMassForGlycanTree(this.Subtrees[0]) > GetMonoMassForGlycanTree(this.Subtrees[2]))
+                            {
+                                strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                                strSub3 = "(" + this.Subtrees[2].GetIUPACString() + "-)";
+                            }
+                            else
+                            {
+                                strSub1 = this.Subtrees[2].GetIUPACString() + "-";
+                                strSub3 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (GlycanCount[0] > GlycanCount[1])
+                        {
+                            strSub1 = this.Subtrees[0].GetIUPACString() + "-";
+                            strSub3 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                        }
+                        else if (GlycanCount[0] < GlycanCount[1])
+                        {
+                            strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                            strSub3 = "(" + this.Subtrees[0].GetIUPACString() + "-)";
+                        }
+                        else
+                        {
+                            if (GetMonoMassForGlycanTree(this.Subtrees[0]) > GetMonoMassForGlycanTree(this.Subtrees[1]))
+                            {
+                                strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                                strSub3 = "(" + this.Subtrees[2].GetIUPACString() + "-)";
+                            }
+                            else
+                            {
+                                strSub1 = this.Subtrees[2].GetIUPACString() + "-";
+                                strSub3 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                            }
+                        }
+                    }
+                    strTree = strSub1 + strSub2 + strSub3 + _NodeType.ToString();
+                }
+                else //no Bisecting
+                {
+                    if (GlycanCount[0] > GlycanCount[1])
+                    {
+                        strSub1 = this.Subtrees[0].GetIUPACString() + "-";
+                        strSub2 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                    }
+                    else if (GlycanCount[0] < GlycanCount[1])
+                    {
+                        strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                        strSub2 = "(" + this.Subtrees[0].GetIUPACString() + "-)";
+                    }
+                    else
+                    {
+                        if (GetMonoMassForGlycanTree(this.Subtrees[0]) > GetMonoMassForGlycanTree(this.Subtrees[1]))
+                        {
+                            strSub1 = this.Subtrees[0].GetIUPACString() + "-";
+                            strSub2 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                        }
+                        else
+                        {
+                            strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                            strSub2 = "(" + this.Subtrees[0].GetIUPACString() + "-)";
+                        }
+                    }
+                    strTree = strSub1 + strSub2 + _NodeType.ToString();
+                }
             }
+            else if (this.DistanceRoot == 3 && this.Subtrees != null && this.Subtrees.Count > 1)
+            {
+                int[] GlycanCount = new int[this.Subtrees.Count];
+                for (int i = 0; i < this.Subtrees.Count; i++)
+                {
+                    GlycanCount[i] = this.Subtrees[i].NoOfTotalGlycan - this.Subtrees[i].NoOfDeHex;
+                }
+                if (GlycanCount[0] > GlycanCount[1])
+                {
+                    strSub1 = this.Subtrees[0].GetIUPACString() + "-";
+                    strSub2 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                }
+                else if (GlycanCount[0] < GlycanCount[1])
+                {
+                    strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                    strSub2 = "(" + this.Subtrees[0].GetIUPACString() + "-)";
+                }
+                else
+                {
+                    if (GetMonoMassForGlycanTree(this.Subtrees[0]) > GetMonoMassForGlycanTree(this.Subtrees[1]))
+                    {
+                        strSub1 = this.Subtrees[0].GetIUPACString() + "-";
+                        strSub2 = "(" + this.Subtrees[1].GetIUPACString() + "-)";
+                    }
+                    else
+                    {
+                        strSub1 = this.Subtrees[1].GetIUPACString() + "-";
+                        strSub2 = "(" + this.Subtrees[0].GetIUPACString() + "-)";
+                    }
+                }
+                strTree = strSub1 + strSub2 + _NodeType.ToString();
+            }
+            else
+            {
+                if (this.SubTree1 != null)
+                {
+                    strSub1 = this.SubTree1.GetIUPACString() + "-";
+                }
+                if (this.SubTree2 != null)
+                {
+                    strSub2 = "(" + this.SubTree2.GetIUPACString() + "-)";
+                }
 
-            if (this.SubTree4 != null)
-            {
-                strSub4 = "(" + this.SubTree4.GetIUPACString() + "-)";
-            }
-            strTree = strSub1 + strSub2 + strSub3 + strSub4 + _NodeType.ToString();
+                if (this.SubTree3 != null)
+                {
+                    strSub3 = "(" + this.SubTree3.GetIUPACString() + "-)";
+                }
+
+                if (this.SubTree4 != null)
+                {
+                    strSub4 = "(" + this.SubTree4.GetIUPACString() + "-)";
+                }
+                strTree = strSub1 + strSub2 + strSub3 + strSub4 + _NodeType.ToString();  //strSub1 First row ; strSub4, 4th row 
+            }            
             return strTree;
         }
         public string GetIUPACStringWithNodeID()

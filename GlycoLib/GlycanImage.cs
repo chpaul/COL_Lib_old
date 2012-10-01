@@ -51,7 +51,7 @@ namespace COL.GlycoLib
 
             foreach (GlycanTreeNode FGS in argStructure.TheoreticalFragment)
             {
-                GS = new GlycansDrawer(FGS.GetIUPACString(), false, 1);
+                GS = new GlycansDrawer(FGS.GetIUPACString(), false);
                 double glycopeptideMZ = GlycanMass.GetGlycanMasswithCharge(FGS.GlycanType,FGS.Charge) + argStructure.Y1.Mass - GlycanMass.GetGlycanMasswithCharge(Glycan.Type.HexNAc, FGS.Charge);
                 Image imgStructure = GlycanImage.RotateImage(GS.GetImage(), 270);
 
