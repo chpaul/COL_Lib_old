@@ -77,7 +77,7 @@ namespace TestApp
                 }
                 DT.Rows.Add(row);
             }
-            raw.CloseRaw();
+            
         }
 
         private void btnIncreaseScanNo_Click(object sender, EventArgs e)

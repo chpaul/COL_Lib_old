@@ -30,7 +30,7 @@ namespace TestApp
         {
             
             //GlycansDraw GS = new GlycansDraw();
-            COL.GlycoLib.GlycansDrawer GS = new COL.GlycoLib.GlycansDrawer(comboBox1.Text.ToString(), false,1);
+            COL.GlycoLib.GlycansDrawer GS = new COL.GlycoLib.GlycansDrawer(comboBox1.Text.ToString(), false);
            
             
              Image a = GS.GetImage();

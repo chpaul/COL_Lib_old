@@ -13,6 +13,7 @@ namespace COL.MassLib
         private int _parentCharge = 0;
         private float _parentMz = 0;
         private float _parentMonoMW = 0;
+        private float _parentAVGMonoMW = 0;
         private int _msLevel;
         private float _minIntensity;
         private float _maxIntensity;
@@ -20,6 +21,42 @@ namespace COL.MassLib
         private float _minMZ;
         private float _maxMZ;
 
+        public MSScan()
+        {
+            _lstMsPeak = new List<MSPeak>();
+            _minIntensity = 10000000000.0f;
+            _minMZ = 10000000000.0f;
+            _maxIntensity = -10000000000.0f;
+            _maxMZ = -10000000000.0f;
+        }
+
+        public MSScan(int argScanNo)
+        {
+            _lstMsPeak = new List<MSPeak>();
+            _scanNo = argScanNo;
+
+            _minIntensity = 10000000000.0f;
+            _minMZ = 10000000000.0f;
+            _maxIntensity = -10000000000.0f;
+            _maxMZ = -10000000000.0f;
+        }
+        public MSScan(float[] argMz, float[] argIntensity, float argParentMZ, float argParentMonoMW, float argParentAVGMonoMW, int argParentCharge)
+        {
+            _lstMsPeak = new List<MSPeak>();
+            for (int i = 0; i < argMz.Length; i++)
+            {
+                AddPeak(new MSPeak(argMz[i], argIntensity[i]));
+            }
+           _parentMonoMW  = argParentMonoMW;
+           _parentAVGMonoMW = argParentAVGMonoMW;
+            _minIntensity = 10000000000.0f;
+            _minMZ = 10000000000.0f;
+            _maxIntensity = -10000000000.0f;
+            _maxMZ = -10000000000.0f;
+            _parentCharge = argParentCharge;
+            _parentMz = argParentMZ;
+            
+        }
         public List<MSPeak> MSPeaks
         {
             get {return _lstMsPeak;}
@@ -73,6 +110,11 @@ namespace COL.MassLib
             get { return _parentMonoMW; }
             set { _parentMonoMW = value; }
         }
+        public float ParentAVGMonoMW
+        {
+            get { return _parentAVGMonoMW; }
+            set { _parentAVGMonoMW = value; }
+        }
         public int MsLevel
         {
             get { return _msLevel; }
@@ -111,46 +153,11 @@ namespace COL.MassLib
         {
             return this.MemberwiseClone();
         }
-        public MSScan()
-        {
-            _lstMsPeak = new List<MSPeak>();
-            _minIntensity = 10000000000.0f;
-            _minMZ = 10000000000.0f;
-            _maxIntensity = -10000000000.0f;
-            _maxMZ = -10000000000.0f;
-        } 
-        public void  Clear()
-        {
-            _lstMsPeak.Clear(); 
 
+        public void Clear()
+        {
+            _lstMsPeak.Clear();
         }
-        public MSScan(int argScanNo)
-        {
-            _lstMsPeak = new List<MSPeak>();
-              _scanNo = argScanNo;
-
-            _minIntensity = 10000000000.0f;
-            _minMZ = 10000000000.0f;
-            _maxIntensity = -10000000000.0f;
-            _maxMZ = -10000000000.0f;            
-        }
-        public MSScan(float[] argMz, float[] argIntensity, float argParentMZ,float argParentMonoMW, int argParentCharge)
-        {
-            _lstMsPeak = new List<MSPeak>();
-            for (int i = 0; i < argMz.Length; i++)
-            {
-                AddPeak(new MSPeak(argMz[i], argIntensity[i]));
-            }
-            _parentMonoMW = argParentMonoMW;
-
-            _minIntensity = 10000000000.0f;
-            _minMZ = 10000000000.0f;
-            _maxIntensity = -10000000000.0f;
-            _maxMZ = -10000000000.0f;
-            _parentCharge = argParentCharge;
-            _parentMz = argParentMZ;
-        }
-
         public void AddPeak(MSPeak argPeak)
         {
 

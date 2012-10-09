@@ -49,6 +49,7 @@
     <Compile Include="GlycanStructure.cs" />
     <Compile Include="GlycanTreeNode.cs" />
     <Compile Include="GlycanTreeForDrawer.cs" />
+    <Compile Include="YxFinder.cs" />
     <Compile Include="YxList.cs" />
     <Compile Include="PointMath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +78,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)$(OutDir)$(TargetFileName)  D:\!SVN\!IncludeFiles</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)$(OutDir)$(TargetFileName)"  "D:\My Box Files\!SVN\!IncludeFiles"</PostBuildEvent>
   </PropertyGroup>
 </Project>

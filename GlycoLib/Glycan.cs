@@ -10,13 +10,11 @@ namespace COL.GlycoLib
         public enum Type { HexNAc = 1, Hex,DeHex, NeuAc, NeuGc,Man,Gal }
         private Type _type;
         private int _charge;
-        private float _mz;
 
         public Glycan(Type argType, int argCharge)
         {
             _type = argType;
-            _charge = argCharge;
-            _mz = GlycanMass.GetGlycanMasswithCharge(argType, argCharge);
+            _charge = argCharge;           
         }
         public Type GlycanType
         {
@@ -28,7 +26,19 @@ namespace COL.GlycoLib
         }
         public float Mz
         {
-            get { return _mz; }
+            get { return GlycanMass.GetGlycanMasswithCharge(_type, _charge); ; }
+        }
+        public float AVGMz
+        {
+            get { return GlycanMass.GetGlycanAVGMasswithCharge(_type, _charge); }
+        }
+        public float Mass
+        {
+            get { return GlycanMass.GetGlycanMass(_type); }
+        }
+        public float AVGMass
+        {
+            get { return GlycanMass.GetGlycanAVGMass(_type); }
         }
         public static Glycan.Type String2GlycanType(string argType)
         {

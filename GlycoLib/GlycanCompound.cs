@@ -25,6 +25,7 @@ namespace COL.GlycoLib
         bool _isReducedReducingEnd=false;
         bool _isDeuterium=false;
         double _MonoMass;
+        double _AVGMass;
         public GlycanCompound(int argHexNac, int argHex, int argDeHex, int argSialic)
         {
             _HexNAc = argHexNac;
@@ -48,6 +49,7 @@ namespace COL.GlycoLib
             _isDeuterium = argIsDeuterium;
             CalcAtom();
             CalcMass();
+            CalcAVGMass();
         }
        public GlycanCompound(int argHexNac, int argHex, int argDeHex, int argSialic, bool argIsPermethylated, bool argIsDeuterium, bool argReducedReducingEnd, bool argIsSodium, bool argIsHuman, bool NoProfile)
         {
@@ -63,6 +65,7 @@ namespace COL.GlycoLib
             _isDeuterium = argIsDeuterium;
             CalcAtom();
             CalcMass();
+            CalcAVGMass();
         }
 
         public bool isHuman
@@ -81,12 +84,26 @@ namespace COL.GlycoLib
                 }
                 return _MonoMass;
             }
-
+        }
+        public double AVGMass
+        {
+            get
+            {
+                if (_AVGMass == 0.0)
+                {
+                    CalcAVGMass();
+                }
+                return _AVGMass;
+            }
         }
         private void CalcMass()
         {
             _MonoMass = _Carbon * Atoms.CarbonMass + _Hydrogen * Atoms.HydrogenMass + _Nitrogen * Atoms.NitrogenMass + Oxygen * Atoms.OxygenMass + Sodium * Atoms.SodiumMass + _Deuterium * Atoms.DeuteriumMass;
          }
+        private void CalcAVGMass()
+        {
+            _AVGMass = _Carbon * Atoms.CarbonAVGMass + _Hydrogen * Atoms.HydrogenAVGMass + _Nitrogen * Atoms.NitrogenAVGMass + Oxygen * Atoms.OxygenAVGMass + Sodium * Atoms.SodiumMass + _Deuterium * Atoms.DeuteriumMass;
+        }
         public bool isPermethylated
         {
             get { return _Permethylated; }

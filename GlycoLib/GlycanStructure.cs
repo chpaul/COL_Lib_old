@@ -150,19 +150,55 @@ namespace COL.GlycoLib
         {
             get
             {
-                float glycanMass = 0.0f;
-                foreach (GlycanTreeNode T in _tree.GetListsofGlycanTree())
-                {
-                    glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanMasswithCharge(T.GlycanType, _tree.Charge);
-                }
-                return glycanMass;
+                //float glycanMass = 0.0f;
+                //foreach (GlycanTreeNode T in _tree.GetListsofGlycanTree())
+                //{
+                //    //glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanMasswithCharge(T.GlycanType, _tree.Charge);
+                //    glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanMass(T.GlycanType);
+                //}
+                //glycanMass = (glycanMass + Atoms.ProtonMass * Charge) / Charge;
+                //return glycanMass;
+                return (GlycanMonoMass + MassLib.Atoms.ProtonMass * Charge) / Charge;
             }
         }
         public float GlycanMonoMass
         {
             get
-            {         
-                return (float)((GlycanMZ) * _tree.Charge - (MassLib.Atoms.ProtonMass * _tree.Charge));
+            {
+                float glycanMass = 0.0f;
+                foreach (GlycanTreeNode T in _tree.GetListsofGlycanTree())
+                {
+                    //glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanMasswithCharge(T.GlycanType, _tree.Charge);
+                    glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanMass(T.GlycanType);
+                }
+                return glycanMass;
+            }
+        }
+        public float GlycanAVGMZ
+        {
+            get
+            {
+                //float glycanMass = 0.0f;
+                //foreach (GlycanTreeNode T in _tree.GetListsofGlycanTree())
+                //{
+                //    glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanAVGMass(T.GlycanType);
+                //}
+                //glycanMass = (glycanMass + Atoms.ProtonMass * Charge) / Charge;
+                //return glycanMass;
+                return (GlycanAVGMonoMass + MassLib.Atoms.ProtonMass * Charge) / Charge;
+
+            }
+        }
+        public float GlycanAVGMonoMass
+        {
+            get
+            {
+                float glycanMass = 0.0f;
+                foreach (GlycanTreeNode T in _tree.GetListsofGlycanTree())
+                {
+                    glycanMass = glycanMass + GlycoLib.GlycanMass.GetGlycanAVGMass(T.GlycanType);
+                }
+                return glycanMass;
             }
         }
         public int NoOfGlycan(Glycan argGlycan)
