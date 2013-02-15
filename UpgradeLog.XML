@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="COL_Lib">
+</Property><Property Name="Solution File" Value="D:\!SVN\COL_Lib_VS10\COL_Lib.sln">
+</Property><Property Name="User Options File" Value="D:\!SVN\COL_Lib_VS10\COL_Lib.suo">
+</Property><Property Name="Date" Value="Friday, July 13, 2012">
+</Property><Property Name="Time" Value="2:21 AM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="COL_Lib.sln" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\COL_Lib.sln">
+</Event><Event ErrorLevel="0" Project="" Source="COL_Lib.suo" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\COL_Lib.suo">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MassLib.csproj" Description="Project file successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\MassLib.csproj">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\Atoms.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\Atoms.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\Class1.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\Class1.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\IRawFileReader.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\IRawFileReader.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\IsotopeProfileHelper.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\IsotopeProfileHelper.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MSPeak.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\MSPeak.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MSPoint.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\MSPoint.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MSScan.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\MSScan.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\mzXMLReader.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\mzXMLReader.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MassUtility.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\MassUtility.cs">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\XRawReader.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\MassLib\XRawReader.cs">
+</Event><Event ErrorLevel="1" Project="MassLib" Source="MassLib\MassLib.csproj" Description="Your project is targeting .NET Framework 2.0 or 3.0. If your project uses assemblies requiring a newer .NET Framework, your project will fail to build. You can change the .NET Framework version by clicking Properties on the project menu and then selecting a new version in the '.NET Framework' dropdown box. (In Visual Basic, this is located on the Compile tab by clicking the 'Advanced Compiler Options...' button.)">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MassLib.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="MassLib" Source="MassLib\MassLib.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycoLib.csproj" Description="Project file successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycoLib.csproj">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\Glycan.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\Glycan.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycanCompound.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycanCompound.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycanImage.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycanImage.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycanMass.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycanMass.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycansDrawer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycansDrawer.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycanStructure.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycanStructure.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycanTreeNode.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycanTreeNode.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycanTreeForDrawer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\GlycanTreeForDrawer.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\YxList.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\YxList.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\PointMath.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\PointMath.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\StructureRule.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\StructureRule.cs">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\FilterRules.txt" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\FilterRules.txt">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\N-Glycan_Rules.txt" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\GlycoLib\N-Glycan_Rules.txt">
+</Event><Event ErrorLevel="1" Project="GlycoLib" Source="GlycoLib\GlycoLib.csproj" Description="Your project is targeting .NET Framework 2.0 or 3.0. If your project uses assemblies requiring a newer .NET Framework, your project will fail to build. You can change the .NET Framework version by clicking Properties on the project menu and then selecting a new version in the '.NET Framework' dropdown box. (In Visual Basic, this is located on the Compile tab by clicking the 'Advanced Compiler Options...' button.)">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycoLib.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="GlycoLib" Source="GlycoLib\GlycoLib.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\ProtLib.csproj" Description="Project file successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\Prot_Lib\ProtLib.csproj">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\AminoAcidMass.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\Prot_Lib\AminoAcidMass.cs">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\FastaFile.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\Prot_Lib\FastaFile.cs">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\FastaReader.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\Prot_Lib\FastaReader.cs">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\Prot_Lib\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\ProteinInfo.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\Prot_Lib\ProteinInfo.cs">
+</Event><Event ErrorLevel="1" Project="ProtLib" Source="Prot_Lib\ProtLib.csproj" Description="Your project is targeting .NET Framework 2.0 or 3.0. If your project uses assemblies requiring a newer .NET Framework, your project will fail to build. You can change the .NET Framework version by clicking Properties on the project menu and then selecting a new version in the '.NET Framework' dropdown box. (In Visual Basic, this is located on the Compile tab by clicking the 'Advanced Compiler Options...' button.)">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\ProtLib.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="ProtLib" Source="Prot_Lib\ProtLib.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\TestApp.csproj" Description="Project file successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\TestApp.csproj">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\TestApp.csproj.user" Description="Project user file successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\TestApp.csproj.user">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\frmDrawer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\frmDrawer.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\frmDrawer.designer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\frmDrawer.designer.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\frmTest.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\frmTest.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\frmTest.Designer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\frmTest.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\Program.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\Program.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\Properties\Resources.Designer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\Properties\Settings.Designer.cs" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\Properties\Settings.settings" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\frmDrawer.resx" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\frmDrawer.resx">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\frmTest.resx" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\frmTest.resx">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\Properties\Resources.resx" Description="File successfully backed up as D:\!SVN\COL_Lib_VS10\Backup\TestApp\Properties\Resources.resx">
+</Event><Event ErrorLevel="1" Project="TestApp" Source="TestApp\TestApp.csproj" Description="Your project is targeting .NET Framework 2.0 or 3.0. If your project uses assemblies requiring a newer .NET Framework, your project will fail to build. You can change the .NET Framework version by clicking Properties on the project menu and then selecting a new version in the '.NET Framework' dropdown box. (In Visual Basic, this is located on the Compile tab by clicking the 'Advanced Compiler Options...' button.)">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\TestApp.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TestApp" Source="TestApp\TestApp.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="COL_Lib.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="COL_Lib.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="MassLib" Source="MassLib\MassLib.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="GlycoLib" Source="GlycoLib\GlycoLib.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="ProtLib" Source="Prot_Lib\ProtLib.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="TestApp" Source="TestApp\TestApp.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

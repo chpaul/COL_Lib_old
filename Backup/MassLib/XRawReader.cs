@@ -22,31 +22,21 @@ namespace COL.MassLib
         {
             get { return Raw.GetNumScans(); }
         }
-        //public GlypID.Peaks.clsPeakProcessorParameters PeakProcessorParameter
-        //{
-        //    set
-        //    {
-        //        _singleToNoiseRatio = value.SignalToNoiseThreshold;
-        //        _peakBackgroundRatio = value.PeakBackgroundRatio;
-        //    }
-        //}
-        public void SetPeakProcessorParameter(GlypID.Peaks.clsPeakProcessorParameters argPeakProcessorParameter)
+        public GlypID.Peaks.clsPeakProcessorParameters PeakProcessorParameter
         {
-            _singleToNoiseRatio = argPeakProcessorParameter.SignalToNoiseThreshold;
-            _peakBackgroundRatio = argPeakProcessorParameter.PeakBackgroundRatio;
+            set
+            {
+                _singleToNoiseRatio = value.SignalToNoiseThreshold;
+                _peakBackgroundRatio = value.PeakBackgroundRatio;
+            }
         }
-        //public GlypID.HornTransform.clsHornTransformParameters TransformParameter
-        //{
-        //    set
-        //    {
-        //        _peptideMinBackgroundRatio = value.PeptideMinBackgroundRatio;
-        //        _maxCharge = value.MaxCharge;
-        //    }
-        //}
-        public void SetTransformParameter(GlypID.HornTransform.clsHornTransformParameters argTransformParameter)
+        public GlypID.HornTransform.clsHornTransformParameters TransformParameter
         {
-            _peakBackgroundRatio = argTransformParameter.PeptideMinBackgroundRatio;
-            _maxCharge = argTransformParameter.MaxCharge;
+            set
+            {
+                _peptideMinBackgroundRatio = value.PeptideMinBackgroundRatio;
+                _maxCharge = value.MaxCharge;
+            }
         }
         public int GetMsLevel(int argScan)
         {

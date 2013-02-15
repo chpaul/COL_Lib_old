@@ -49,6 +49,13 @@ namespace TestApp
         private void ReadScan(int argScanNo)
         {
             XRawReader raw = new XRawReader(txtFileName.Text);
+            //Class1 cs = new Class1(txtFileName.Text, 1861);
+            for (int i = 1; i <= raw.NumberOfScans; i++)
+            {
+               // cs = new Class1(txtFileName.Text, i);
+                MSScan s = raw.ReadScan(i);
+            }
+
             _scan = raw.ReadScan(argScanNo);
             dataGridView1.DataSource = DT;
             List<string> Sb = new List<string>();

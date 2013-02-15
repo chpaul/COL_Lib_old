@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassLib", "MassLib\MassLib.csproj", "{A9AF2446-C02A-4D05-BBE5-7E823BD073AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlycoLib", "GlycoLib\GlycoLib.csproj", "{F491280E-32DE-4EC8-97AD-BEBB8EEF8722}"
