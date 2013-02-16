@@ -262,16 +262,19 @@ namespace COL.GlycoLib
         }
         public double Score
         {
+
             get {
-                if(_Score==0.0)
+                if (_Score == 0.0)
                 {
                     _Score = _tree.Score;
                 }
+
                 return _Score; }
             set
             {
                 _Score = value;
             }
+
         }
 
         //Functions
