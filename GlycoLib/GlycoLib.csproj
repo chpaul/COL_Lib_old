@@ -54,6 +54,7 @@
     <Compile Include="GlycanStructure.cs" />
     <Compile Include="GlycanTreeNode.cs" />
     <Compile Include="GlycanTreeForDrawer.cs" />
+    <Compile Include="ReadGlycanListFromFile.cs" />
     <Compile Include="YxFinder.cs" />
     <Compile Include="YxList.cs" />
     <Compile Include="PointMath.cs" />
