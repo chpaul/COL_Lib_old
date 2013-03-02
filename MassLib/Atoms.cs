@@ -25,6 +25,11 @@ namespace COL.MassLib
         private const float D = 2.0141021f;
         private const float D_AVG = 2.0141021f;       
         private const float Proton = 1.0073f;
+        private const float Potassium = 22.989767f;
+        public static float PotassiumMass
+        {
+            get { return Potassium; }
+        }
         public static float ProtonMass
         {
             get { return Proton; }
