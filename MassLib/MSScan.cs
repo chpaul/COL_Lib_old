@@ -85,6 +85,23 @@ namespace COL.MassLib
                 }
             }
         }
+        public List<float> MZList
+        {
+            get
+            {
+                if (_lstMsPeak.Count != 0)
+                {
+                    List<float> mzs = new List<float>();
+                    foreach (MSPeak p in _lstMsPeak)
+                    {
+                        mzs.Add(p.MonoisotopicMZ);
+                    }
+                    mzs.Sort();
+                    return mzs;
+                }
+                return null;
+            }
+        }
         public int ParentCharge
         {
             get { return _parentCharge; }

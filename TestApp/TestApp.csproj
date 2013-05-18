@@ -66,6 +66,12 @@
     <Compile Include="frmDrawer.designer.cs">
       <DependentUpon>frmDrawer.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmE3D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmE3D.Designer.cs">
+      <DependentUpon>frmE3D.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +83,9 @@
     <EmbeddedResource Include="frmDrawer.resx">
       <DependentUpon>frmDrawer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmE3D.resx">
+      <DependentUpon>frmE3D.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTest.resx">
       <DependentUpon>frmTest.cs</DependentUpon>
@@ -103,6 +112,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElutionViewer\ElutionViewer.csproj">
+      <Project>{9911254B-F7D5-426F-AD5A-1A786572A349}</Project>
+      <Name>ElutionViewer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GlycoLib\GlycoLib.csproj">
       <Project>{F491280E-32DE-4EC8-97AD-BEBB8EEF8722}</Project>
       <Name>GlycoLib</Name>

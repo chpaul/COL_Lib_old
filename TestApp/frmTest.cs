@@ -50,13 +50,13 @@ namespace TestApp
         {
             XRawReader raw = new XRawReader(txtFileName.Text);
             //Class1 cs = new Class1(txtFileName.Text, 1861);
-            for (int i = 1; i <= raw.NumberOfScans; i++)
-            {
-               // cs = new Class1(txtFileName.Text, i);
-                MSScan s = raw.ReadScan(i);
-            }
+            //for (int i = 1; i <= raw.NumberOfScans; i++)
+            //{
+            //   // cs = new Class1(txtFileName.Text, i);
+            //    MSScan s = raw.ReadScan(i);
+            //}
 
-            _scan = raw.ReadScan(argScanNo);
+            MSScan _scan = raw.ReadScan(argScanNo);
             dataGridView1.DataSource = DT;
             List<string> Sb = new List<string>();
             Sb.Add("ScanNo:" + _scan.ScanNo.ToString() + ",Time:" + _scan.Time.ToString() + ",MSLevel:" + _scan.MsLevel.ToString() + ",PeakCount:" + _scan.Count.ToString() +

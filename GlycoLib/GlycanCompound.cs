@@ -19,6 +19,7 @@ namespace COL.GlycoLib
         int _Hex; //	N-Acetylglucosamine C8H15NO6
         int _DeHex; //Fucose C6H12O5        
         int _Sia; //N-Acetylneuraminic acid 	C11H19NO9 (human)   N-glycolylneuraminic acid  C11H19NO10   (Other mammals)
+        int _LCorder;
         bool _Permethylated =false;
         bool _isSodium=false;
         bool _Human=true;
@@ -150,10 +151,23 @@ namespace COL.GlycoLib
         }
         public int Deuterium
         {
-            get { return _Deuterium; }
-            
+            get { return _Deuterium; }            
         }
-
+        public int GlycanLCorder
+        {
+            get { return _LCorder;}
+            set { _LCorder = value; }
+        }
+        public string GlycanKey
+        {
+            get
+            {
+                return _HexNAc.ToString() + "-" +
+                              _Hex.ToString() + "-" +
+                              _DeHex.ToString() + "-" +
+                              _Sia.ToString();
+            }
+        }
 
         /// <summary>
         ///http://www.expasy.ch/tools/glycomod/glycomod_masses.html

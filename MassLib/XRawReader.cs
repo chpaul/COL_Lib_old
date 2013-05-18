@@ -37,6 +37,10 @@ namespace COL.MassLib
         {
             get { return Raw.GetNumScans(); }
         }
+        public string RawFilePath
+        {
+            get { return _fullFilePath; }
+        }
         //public GlypID.Peaks.clsPeakProcessorParameters PeakProcessorParameter
         //{
         //    set

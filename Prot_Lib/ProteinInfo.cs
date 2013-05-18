@@ -21,9 +21,9 @@ namespace COL.ProtLib
         {
             get { return _sequence; }
         }
-        public List<string> Glycopeptide(int argAllowMissCleavage)
+        public List<string> NGlycopeptide(int argAllowMissCleavage, Protease.Type argProteaseType)
         {
-            List<string> _cleavages = CreateCleavage(argAllowMissCleavage);
+            List<string> _cleavages = CreateCleavage(argAllowMissCleavage, argProteaseType);
 
             List<string> _glycopep = new List<string>();
             Regex sequon = new Regex("N[ARNDCEQGHILKMFSTWYV][S|T]", RegexOptions.IgnoreCase);  //NXS NXT  X!=P
@@ -51,7 +51,21 @@ namespace COL.ProtLib
             }
             return _glycopep;
         }
-        public List<string> CreateCleavage(int argAllowMissCleavage)
+        public List<string> OGlycopeptide(int argAllowMissCleavage, Protease.Type argProteaseType)
+        {
+            List<string> _cleavages = CreateCleavage(argAllowMissCleavage, argProteaseType);
+
+            List<string> _glycopep = new List<string>();
+             foreach (string pep in _cleavages)
+            {
+                if (pep.ToUpper().Contains("S") || pep.ToUpper().Contains("T"))
+                {
+                    _glycopep.Add(pep);
+                }
+             }
+            return _glycopep;
+        }
+        public List<string> CreateCleavage(int argAllowMissCleavage, Protease.Type argProteaseType)
         {
             List<string> _cleavedPeptides;
             if (argAllowMissCleavage == -1)
@@ -60,7 +74,23 @@ namespace COL.ProtLib
                 _cleavedPeptides.Add(_sequence);
                 return _cleavedPeptides;
             }
-            _cleavedPeptides = TrypsinDigest();
+            if (argProteaseType == Protease.Type.None)
+            {
+                _cleavedPeptides = new List<string>();
+                _cleavedPeptides.Add(_sequence);
+            }
+            else if (argProteaseType == Protease.Type.Trypsin)
+            {
+                _cleavedPeptides = TrypsinDigest();
+            }
+            else if (argProteaseType == Protease.Type.GlucED)
+            {
+                _cleavedPeptides = GluCDigest(true);
+            }
+            else 
+            {
+                _cleavedPeptides = GluCDigest(false);
+            }
             string Combind = "";
             List<string> MissCleavage = new List<string>();
             for (int i = 1; i <= argAllowMissCleavage; i++)
@@ -106,6 +136,34 @@ namespace COL.ProtLib
                 {
                     _cleavages.Add(Seq.Substring(p, Seq.IndexOf("K", p) + 1 - p));
                     p = i + 1;
+                }
+            }
+            _cleavages.Add(Seq.Substring(p));
+            return _cleavages;
+        }
+        /// <summary>
+        /// non-phosphate buffers, Glu-C cleaves on the C-terminal side of glutamic acid (E)
+        /// in phosphate buffer  Glu-C cleaves on the C-terminal side of both glutamic acid(E) and aspartic acid (D)
+        /// </summary>
+        private List<string> GluCDigest(bool argIsPhosphate)
+        {
+            string Seq = _sequence;
+            List<string> _cleavages = new List<string>();
+            int p = 0;
+            for (int i = 0; i < _sequence.Length - 1; i++)
+            {
+                if (Seq[i] == 'E' )
+                {
+                    _cleavages.Add(Seq.Substring(p, Seq.IndexOf("E", p) + 1 - p));
+                    p = i + 1;
+                }
+                if (argIsPhosphate)
+                {
+                    if (Seq[i] == 'D')
+                    {
+                        _cleavages.Add(Seq.Substring(p, Seq.IndexOf("D", p) + 1 - p));
+                        p = i + 1;
+                    }
                 }
             }
             _cleavages.Add(Seq.Substring(p));

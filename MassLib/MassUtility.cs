@@ -36,6 +36,51 @@ namespace COL.MassLib
             return GetClosestMassIdx(lstCIDMz, argMZ);
            
         }
+        public static List<int> GetClosestMassIdxsWithinPPM(List<MSPeak> argPeaks, float argMZ,float argPPM)
+        {
+            List<int> ClosedIdxs = new List<int>();
+            //Convert MSPeaks mz into float[]
+            argPeaks.Sort();
+            List<float> lstCIDMz = new List<float>();
+            for (int i = 0; i < argPeaks.Count; i++)
+            {
+                lstCIDMz.Add(argPeaks[i].MonoMass);
+            }
+
+            return GetClosestMassIdxsWithinPPM(lstCIDMz, argMZ, argPPM);
+        }
+        public static List<int> GetClosestMassIdxsWithinPPM(List<float> argPeaks, float argMZ, float argPPM)
+        {
+            List<int> ClosedIdxs = new List<int>();
+            //Convert MSPeaks mz into float[]
+            argPeaks.Sort();
+            List<float> lstCIDMz = argPeaks;
+            int ClosedIdx = GetClosestMassIdx(lstCIDMz, argMZ);
+            for (int i = ClosedIdx; i >= 0; i--)
+            {
+                if (GetMassPPM(lstCIDMz[i], argMZ) <= argPPM)
+                {
+                    ClosedIdxs.Add(i);
+                }
+                else  //No small peak within PPM
+                {
+                    break;
+                }
+            }
+            for (int i = ClosedIdx + 1; i < lstCIDMz.Count; i++)
+            {
+                if (GetMassPPM(lstCIDMz[i], argMZ) <= argPPM)
+                {
+                    ClosedIdxs.Add(i);
+                }
+                else  //No small peak within PPM
+                {
+                    break;
+                }
+            }
+            ClosedIdxs.Sort();
+            return ClosedIdxs;
+        }
         public static int GetClosestMassIdx(List<float> argPeaks, float argMZ)
         {
             int KeyIdx = argPeaks.BinarySearch(argMZ);

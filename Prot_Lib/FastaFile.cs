@@ -14,20 +14,28 @@ namespace COL.ProtLib
             _fastaFullPath = argFastaFullPath;            
             _proteinInfo = FastaReader.ReadFasta(_fastaFullPath);
         }
-        public void CreateCleavedPeptides(int argAllowMissCleavage)
+        public void CreateCleavedPeptides(int argAllowMissCleavage, Protease.Type argProteaseType)
         {
             _misscleavaged = argAllowMissCleavage;
             foreach (ProteinInfo prot in _proteinInfo)
             {
-                List<string> peptides = prot.Glycopeptide(_misscleavaged);
+                List<string> peptides = prot.CreateCleavage(_misscleavaged, argProteaseType);
             }
         }
-        public void CreateCleavedGlycoPeptides(int argAllowMissCleavage)
+        public void CreateCleavedOGlycoPeptides(int argAllowMissCleavage, Protease.Type argProteaseType)
         {
             _misscleavaged = argAllowMissCleavage;
             foreach (ProteinInfo prot in _proteinInfo)
             {
-                List<string> glycopeptides = prot.Glycopeptide(_misscleavaged);
+                List<string> glycopeptides = prot.OGlycopeptide(_misscleavaged, argProteaseType);
+            }
+        }
+        public void CreateCleavedNGlycoPeptides(int argAllowMissCleavage, Protease.Type argProteaseType)
+        {
+            _misscleavaged = argAllowMissCleavage;
+            foreach (ProteinInfo prot in _proteinInfo)
+            {
+                List<string> glycopeptides = prot.NGlycopeptide(_misscleavaged, argProteaseType);
             }
         }
     }

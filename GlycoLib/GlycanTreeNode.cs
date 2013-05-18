@@ -19,6 +19,7 @@ namespace COL.GlycoLib
         private int _charge = 0;
         private int _missedpeak = 0;
         private GlycanTreeNode _parent;
+        private string _IUPAC;
         public GlycanTreeNode(Glycan.Type argGlycanType, int argID)
         {
             _NodeType = argGlycanType;
@@ -43,6 +44,18 @@ namespace COL.GlycoLib
         {
             get { return _NodeID; }
             set { _NodeID = value; }
+        }
+        public string IUPAC
+        {
+            get
+            {
+                if (_IUPAC == "")
+                {
+                    _IUPAC = this.GetIUPACString();
+                }
+
+                return _IUPAC;
+            }
         }
         /// <summary>
         /// How many missed peak in this glycan
@@ -1080,9 +1093,17 @@ namespace COL.GlycoLib
                 }
                 if (GlycanCount.Length == 3)
                 {
-                    strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
-                    if (BisectingHexNacIdx == 0)
+                    if (BisectingHexNacIdx == -1)
                     {
+                        List<KeyValuePair<int, int>> Soreted = FindOrder(GlycanCount);
+                        //0>1>2
+                        strSub1 = this.Subtrees[Soreted[0].Key].GetIUPACString() + "-";
+                        strSub2 = this.Subtrees[Soreted[1].Key].GetIUPACString();
+                        strSub3 = "(" + this.Subtrees[Soreted[2].Key].GetIUPACString() + "-)";
+                    }
+                    else if (BisectingHexNacIdx == 0)
+                    {
+                        strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
                         if (GlycanCount[1] > GlycanCount[2])
                         {
                             strSub1 = this.Subtrees[1].GetIUPACString() + "-";
@@ -1109,6 +1130,7 @@ namespace COL.GlycoLib
                     }
                     else if (BisectingHexNacIdx == 1)
                     {
+                        strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
                         if (GlycanCount[0] > GlycanCount[2])
                         {
                             strSub1 = this.Subtrees[0].GetIUPACString() + "-";
@@ -1135,6 +1157,7 @@ namespace COL.GlycoLib
                     }
                     else
                     {
+                        strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
                         if (GlycanCount[0] > GlycanCount[1])
                         {
                             strSub1 = this.Subtrees[0].GetIUPACString() + "-";
@@ -1242,7 +1265,8 @@ namespace COL.GlycoLib
                     strSub4 = "(" + this.SubTree4.GetIUPACString() + "-)";
                 }
                 strTree = strSub1 + strSub2 + strSub3 + strSub4 + _NodeType.ToString();  //strSub1 First row ; strSub4, 4th row 
-            }            
+            }
+            _IUPAC = strTree;
             return strTree;
         }
         public string GetIUPACStringWithNodeID()
@@ -1423,7 +1447,26 @@ namespace COL.GlycoLib
                 return Tree;
             }
         }
-
+        /// <summary>
+        /// Find the order of Input and return INDEX in DESC order
+        /// </summary>
+        /// <param name="argInput"></param>
+        /// <returns></returns>
+        private List<KeyValuePair<int, int>> FindOrder(int[] argInput)
+        {
+            List<KeyValuePair<int, int>> myList = new List<KeyValuePair<int, int>>();
+           for (int i = 0; i < argInput.Length; i++)
+            {
+                myList.Add(new KeyValuePair<int, int>(i, argInput[i]));
+            }
+           myList.Sort(delegate(KeyValuePair<int, int> firstPair,
+                 KeyValuePair<int, int> nextPair)
+                 {
+                     return firstPair.Value.CompareTo(nextPair.Value);
+                 }
+             );
+           return myList;
+        }
 
         /*public void AddScorePeak(List<float> argMS, List<float> argIntensity)
         {
