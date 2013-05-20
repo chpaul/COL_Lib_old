@@ -190,7 +190,7 @@ namespace COL.MassLib
 
             double min_peptide_intensity = 0;
             scan.Time = Raw.GetScanTime(scan.ScanNo);
-
+            scan.ScanHeader = Raw.GetScanDescription(scan.ScanNo);
             if (scan.MsLevel != 1)
             {
                 float[] _parentRawMzs = null;

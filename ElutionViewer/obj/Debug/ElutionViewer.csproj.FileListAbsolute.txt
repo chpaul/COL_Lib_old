@@ -1,0 +1,8 @@
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\bin\Debug\ElutionViewer.dll
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\bin\Debug\ElutionViewer.pdb
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\obj\Debug\ResolveAssemblyReference.cache
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\obj\Debug\COL.ElutionViewer.EluctionViewer.resources
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\obj\Debug\ResGen.read.1.tlog
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\obj\Debug\ResGen.write.1.tlog
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\obj\Debug\ElutionViewer.dll
+D:\My Box Files\!gitRepo\COL_Lib\ElutionViewer\obj\Debug\ElutionViewer.pdb

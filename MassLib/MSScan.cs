@@ -5,7 +5,7 @@ using System.Text;
 
 namespace COL.MassLib
 {
-    public class MSScan :ICloneable
+    public class MSScan : ICloneable
     {
         private List<MSPeak> _lstMsPeak;
         private int _scanNo;
@@ -20,6 +20,7 @@ namespace COL.MassLib
         private double _time;
         private float _minMZ;
         private float _maxMZ;
+        private string _scanHeader;
 
         public MSScan()
         {
@@ -47,20 +48,20 @@ namespace COL.MassLib
             {
                 AddPeak(new MSPeak(argMz[i], argIntensity[i]));
             }
-           _parentMonoMW  = argParentMonoMW;
-           _parentAVGMonoMW = argParentAVGMonoMW;
+            _parentMonoMW = argParentMonoMW;
+            _parentAVGMonoMW = argParentAVGMonoMW;
             _minIntensity = 10000000000.0f;
             _minMZ = 10000000000.0f;
             _maxIntensity = -10000000000.0f;
             _maxMZ = -10000000000.0f;
             _parentCharge = argParentCharge;
             _parentMz = argParentMZ;
-            
+
         }
         public List<MSPeak> MSPeaks
         {
-            get {return _lstMsPeak;}
-            set 
+            get { return _lstMsPeak; }
+            set
             {
                 _lstMsPeak = value;
                 _lstMsPeak.Sort();
@@ -81,7 +82,7 @@ namespace COL.MassLib
                     if (argPeak.MonoIntensity <= _minIntensity)
                     {
                         _minIntensity = argPeak.MonoIntensity;
-                    }          
+                    }
                 }
             }
         }
@@ -102,6 +103,11 @@ namespace COL.MassLib
                 return null;
             }
         }
+        public string ScanHeader
+        {
+            get { return _scanHeader; }
+            set { _scanHeader = value; }
+        }
         public int ParentCharge
         {
             get { return _parentCharge; }
@@ -114,8 +120,8 @@ namespace COL.MassLib
         }
         public double Time
         {
-            get {return _time;}
-            set {_time =value;}
+            get { return _time; }
+            set { _time = value; }
         }
         public int ParentScanNo
         {
@@ -179,23 +185,23 @@ namespace COL.MassLib
         {
 
             if (argPeak.MonoisotopicMZ > _maxMZ)
-                {
-                    _maxMZ = argPeak.MonoisotopicMZ;
-                }
+            {
+                _maxMZ = argPeak.MonoisotopicMZ;
+            }
             if (argPeak.MonoisotopicMZ <= _minMZ)
-                {
-                    _minMZ = argPeak.MonoisotopicMZ;
-                }
+            {
+                _minMZ = argPeak.MonoisotopicMZ;
+            }
             if (argPeak.MonoIntensity > _maxIntensity)
-                {
-                    _maxIntensity = argPeak.MonoIntensity;
-                }
+            {
+                _maxIntensity = argPeak.MonoIntensity;
+            }
             if (argPeak.MonoIntensity <= _minIntensity)
-                {
-                    _minIntensity = argPeak.MonoIntensity;
-                }                
-                _lstMsPeak.Add(argPeak);
-                _lstMsPeak.Sort();
+            {
+                _minIntensity = argPeak.MonoIntensity;
+            }
+            _lstMsPeak.Add(argPeak);
+            _lstMsPeak.Sort();
         }
 
 

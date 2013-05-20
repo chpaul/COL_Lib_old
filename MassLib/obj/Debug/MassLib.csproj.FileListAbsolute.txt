@@ -1,0 +1,7 @@
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\obj\Debug\ResolveAssemblyReference.cache
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\bin\Debug\MassLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\bin\Debug\MassLib.pdb
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\bin\Debug\GlypIDEngine.dll
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\bin\Debug\TheoreticalDistribution.dll
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\obj\Debug\MassLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\MassLib\obj\Debug\MassLib.pdb

@@ -1,0 +1,5 @@
+D:\My Box Files\!gitRepo\COL_Lib\Prot_Lib\bin\Debug\ProtLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\Prot_Lib\bin\Debug\ProtLib.pdb
+D:\My Box Files\!gitRepo\COL_Lib\Prot_Lib\obj\Debug\ResolveAssemblyReference.cache
+D:\My Box Files\!gitRepo\COL_Lib\Prot_Lib\obj\Debug\ProtLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\Prot_Lib\obj\Debug\ProtLib.pdb

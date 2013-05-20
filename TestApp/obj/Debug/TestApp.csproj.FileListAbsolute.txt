@@ -1,0 +1,3 @@
+D:\My Box Files\!gitRepo\COL_Lib\TestApp\obj\Debug\ResolveAssemblyReference.cache
+D:\My Box Files\!gitRepo\COL_Lib\TestApp\obj\Debug\ResGen.read.1.tlog
+D:\My Box Files\!gitRepo\COL_Lib\TestApp\obj\Debug\ResGen.write.1.tlog

@@ -36,18 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GlypIDEngine, Version=2.0.5.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\!IncludeFiles\GlypIDEngine.dll</HintPath>
+    <Reference Include="GlypIDEngine">
+      <HintPath>..\..\..\!IncludeFiles\GlypIDEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
-    <Reference Include="TheoreticalDistribution, Version=1.0.3541.22595, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\!IncludeFiles\TheoreticalDistribution.dll</HintPath>
+    <Reference Include="TheoreticalDistribution">
+      <HintPath>..\..\..\!IncludeFiles\TheoreticalDistribution.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +71,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)$(OutDir)$(TargetFileName)  D:\!SVN\!IncludeFiles</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)$(OutDir)$(TargetFileName)"  "D:\My Box Files\!IncludeFiles"</PostBuildEvent>
   </PropertyGroup>
 </Project>

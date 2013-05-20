@@ -1,0 +1,11 @@
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\obj\Debug\ResolveAssemblyReference.cache
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\GlycoLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\GlycoLib.pdb
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\MassLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\ProtLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\ZedGraph.dll
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\GlypIDEngine.dll
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\MassLib.pdb
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\bin\Debug\ProtLib.pdb
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\obj\Debug\GlycoLib.dll
+D:\My Box Files\!gitRepo\COL_Lib\GlycoLib\obj\Debug\GlycoLib.pdb
