@@ -35,6 +35,10 @@ namespace COL.MassLib
         private static GlypID.Peaks.clsPeakProcessor parentPeakProcessor;
         private static GlypID.Peaks.clsPeakProcessorParameters parentPeakParameters;
 
+        public GlypID.Readers.clsRawData GlypIDReader
+        {
+            get { return Raw; }
+        }
         public int NumberOfScans
         {
             get { return Raw.GetNumScans(); }

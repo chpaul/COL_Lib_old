@@ -14,6 +14,6 @@ namespace COL.MassLib
         void SetPeakProcessorParameter(GlypID.Peaks.clsPeakProcessorParameters argPeakProcessorParameter);
         void SetTransformParameter(GlypID.HornTransform.clsHornTransformParameters argTransformParameter);
         int NumberOfScans { get;}
-        int GetMsLevel(int argScan);
+        int GetMsLevel(int argScan);        
     }
 }

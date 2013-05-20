@@ -1,0 +1,10 @@
+# git ignore file
+COL_Lib.suo
+/Prot_Lib/ProtLib.csproj.DotSettings.user
+/ElutionViewer/ElutionViewer.csproj.DotSettings.user
+/ElutionViewer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/GlycoLib/GlycoLib.csproj.DotSettings.user
+/GlycoLib/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/MassLib/MassLib.csproj.DotSettings.user
+/MassLib/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/Prot_Lib/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
