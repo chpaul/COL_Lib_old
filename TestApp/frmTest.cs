@@ -19,7 +19,8 @@ namespace TestApp
             DT.Columns.Add(Value3);
             DT.Columns.Add(Value4);
             DT.Columns.Add(Value5);
-            DT.Columns.Add(Value6);        
+            DT.Columns.Add(Value6);
+            DT.Columns.Add(Value7);        
         }
         MSScan _scan;
         DataTable DT = new DataTable();
@@ -27,9 +28,10 @@ namespace TestApp
         DataColumn Value1 = new DataColumn("Value1/ChargeState", Type.GetType("System.String"));
         DataColumn Value2 = new DataColumn("MonoisotopicMZ", Type.GetType("System.String"));
         DataColumn Value3 = new DataColumn("MonoMass", Type.GetType("System.String"));
-        DataColumn Value4 = new DataColumn("MonoIntensity", Type.GetType("System.String"));
+        DataColumn Value4 = new DataColumn("ClusterIntesity", Type.GetType("System.String"));
         DataColumn Value5 = new DataColumn("MostIntenseMass", Type.GetType("System.String"));
-        DataColumn Value6 = new DataColumn("FitScore", Type.GetType("System.String"));
+        DataColumn Value6 = new DataColumn("MostIntenseIntensity", Type.GetType("System.String"));
+        DataColumn Value7 = new DataColumn("FitScore", Type.GetType("System.String"));
         
 
 
@@ -55,12 +57,16 @@ namespace TestApp
             //   // cs = new Class1(txtFileName.Text, i);
             //    MSScan s = raw.ReadScan(i);
             //}
-
+            //MSScan _scan0 = raw.ReadScan(1232);
+           // MSScan _scan1 = raw.ReadScan(1230);
+            //MSScan _scan2 = raw.ReadScan(1232);
             MSScan _scan = raw.ReadScan(argScanNo);
             dataGridView1.DataSource = DT;
             List<string> Sb = new List<string>();
             Sb.Add("ScanNo:" + _scan.ScanNo.ToString() + ",Time:" + _scan.Time.ToString() + ",MSLevel:" + _scan.MsLevel.ToString() + ",PeakCount:" + _scan.Count.ToString() +
             ",MinMz:" + _scan.MinMZ.ToString() + "MaxMz:" + _scan.MaxMZ.ToString() + ",MaxIntensity:" + _scan.MaxIntensity.ToString() + ",MinIntensity:" + _scan.MinIntensity.ToString());
+            Sb.Add("ParentScanNo:" + _scan.ParentScanNo.ToString() +  ",Mono Mass:" + _scan.ParentMonoMW.ToString() + ",Mono Mz:" + _scan.ParentMZ.ToString() +
+        ",ScanHeader:" + _scan.ScanHeader + "-,-,-,-,-");//+ _scan.MaxMZ.ToString() + ",MaxIntensity:" + _scan.MaxIntensity.ToString() + ",MinIntensity:" + _scan.MinIntensity.ToString());
 
 
             for (int i = 0; i < _scan.MSPeaks.Count; i++)
@@ -69,8 +75,9 @@ namespace TestApp
                               _scan.MSPeaks[i].ChargeState.ToString() + "," +
                               _scan.MSPeaks[i].MonoisotopicMZ.ToString() + "," +
                               _scan.MSPeaks[i].MonoMass.ToString() + "," +
-                              _scan.MSPeaks[i].MonoIntensity.ToString() + "," +
+                              _scan.MSPeaks[i].ClusterIntensity.ToString() + "," +
                               _scan.MSPeaks[i].MostIntenseMass.ToString() + "," +
+                              _scan.MSPeaks[i].MostIntenseIntensity.ToString() + "," +
                               _scan.MSPeaks[i].FitScore.ToString());
             }
             DT.Rows.Clear();

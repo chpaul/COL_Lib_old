@@ -49,7 +49,7 @@ namespace COL.GlycoLib
         {
             get
             {
-                if (_IUPAC == "")
+                if (_IUPAC == "" || _IUPAC==null)
                 {
                     _IUPAC = this.GetIUPACString();
                 }
@@ -132,10 +132,10 @@ namespace COL.GlycoLib
             while (GlycanStk.Count != 0)
             {
                 GlycanTreeNode g = (GlycanTreeNode)GlycanStk.Peek();
-                if (g.GetChildren() != null && g.GetChildren().Count == 0)
+                if(  (g.GetChildren() != null && g.GetChildren().Count == 0 ) ||
+                    g.GetChildren() == null )
                 {
                     glycanOrder.Add((GlycanTreeNode)GlycanStk.Pop());
-
                 }
                 else
                 {
@@ -1071,6 +1071,90 @@ namespace COL.GlycoLib
             SUM = SUM + argTree.NoOfNeuGc * GlycanMass.GetGlycanMass(Glycan.Type.NeuGc);
             return SUM;
         }
+        public string GetIUPACStringWithNodeID()
+        {
+            return GenerateIUPACString(true);
+        }
+        public string GetIUPACString()
+        {
+            return GenerateIUPACString(false);
+        }
+        private string GenerateIUPACString(bool argWithID)
+        {
+            List<int> PrintOutID = new List<int>();
+            string tmpStr = "";
+            foreach (GlycanTreeNode GN in this.TravelGlycanTreeBFS())
+            {
+                if (PrintOutID.Contains(GN.NodeID))
+                {
+                    if ((GN.Subtrees == null) || GN.Subtrees.Count ==0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        string ChildandParent;
+                        string PID = GN.NodeID + "," + GN.GlycanType.ToString();
+                        ChildandParent = PID + "-";
+             
+                        if (GN.Subtrees.Count == 1)
+                        {
+                            ChildandParent = GN.Subtrees[0].NodeID + "," + GN.Subtrees[0].GlycanType.ToString() + "-" + ChildandParent;
+                            PrintOutID.Add(GN.Subtrees[0].NodeID);
+                        }
+                        else
+                        {
+                            for (int i = GN.Subtrees.Count - 1; i > 0; i--)
+                            {
+                                ChildandParent = "(" + GN.Subtrees[i].NodeID + "," + GN.Subtrees[i].GlycanType.ToString() + "-)" + ChildandParent;
+                                PrintOutID.Add(GN.Subtrees[i].NodeID);
+                            }
+                            ChildandParent = GN.Subtrees[0].NodeID + "," + GN.Subtrees[0].GlycanType.ToString() + "-" + ChildandParent;
+                            PrintOutID.Add(GN.Subtrees[0].NodeID);
+                        }
+                        //Replace 
+                        tmpStr = tmpStr.Replace(PID, ChildandParent).Replace("--", "-");
+                    }
+                }
+                else
+                {
+                        tmpStr = GN.NodeID + "," + GN.GlycanType.ToString();
+                        PrintOutID.Add(GN.NodeID);
+                        if (GN.Subtrees != null)
+                        {
+                            if (GN.Subtrees.Count == 0)
+                            {
+                                continue;
+                            }
+                            if (GN.Subtrees.Count == 1)
+                            {
+                                tmpStr = GN.Subtrees[0].NodeID + "," + GN.Subtrees[0].GlycanType.ToString() + "-" + tmpStr;
+                                PrintOutID.Add(GN.Subtrees[0].NodeID);
+                            }
+                            else
+                            {
+                                for (int i = GN.Subtrees.Count - 1; i > 0; i--)
+                                {
+                                    tmpStr = "(" + GN.Subtrees[i].NodeID + "," + GN.Subtrees[i].GlycanType.ToString() + "-)" + tmpStr;
+                                    PrintOutID.Add(GN.Subtrees[i].NodeID);
+                                }
+                                tmpStr = GN.Subtrees[0].NodeID + "," + GN.Subtrees[0].GlycanType.ToString() + "-" + tmpStr;
+                                PrintOutID.Add(GN.Subtrees[0].NodeID);
+                            }
+                        }
+                }
+            }
+            //Clean up the string
+            if (argWithID == false)
+            {
+                tmpStr = System.Text.RegularExpressions.Regex.Replace(tmpStr, @"[\d]", string.Empty).Replace(",", "");
+            }
+            return tmpStr;
+        }
+
+
+        /* OLD method Recurivse call TreeNode
+        //
         public string GetIUPACString()
         {
             string strTree = "";
@@ -1091,7 +1175,7 @@ namespace COL.GlycoLib
                         BisectingHexNacIdx = i; //Bisecting
                     }
                 }
-                if (GlycanCount.Length == 3)
+                if (GlycanCount.Length == 3) //Has  Bisecting structure
                 {
                     if (BisectingHexNacIdx == -1)
                     {
@@ -1103,7 +1187,7 @@ namespace COL.GlycoLib
                     }
                     else if (BisectingHexNacIdx == 0)
                     {
-                        strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
+                        strSub2 = "(" + this.Subtrees[BisectingHexNacIdx].GetIUPACString() + "-)";
                         if (GlycanCount[1] > GlycanCount[2])
                         {
                             strSub1 = this.Subtrees[1].GetIUPACString() + "-";
@@ -1130,7 +1214,7 @@ namespace COL.GlycoLib
                     }
                     else if (BisectingHexNacIdx == 1)
                     {
-                        strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
+                        strSub2 = "(" + this.Subtrees[BisectingHexNacIdx].GetIUPACString() + "-)";
                         if (GlycanCount[0] > GlycanCount[2])
                         {
                             strSub1 = this.Subtrees[0].GetIUPACString() + "-";
@@ -1157,7 +1241,7 @@ namespace COL.GlycoLib
                     }
                     else
                     {
-                        strSub2 = this.Subtrees[BisectingHexNacIdx].GetIUPACString();
+                        strSub2 = "(" + this.Subtrees[BisectingHexNacIdx].GetIUPACString() + "-)";
                         if (GlycanCount[0] > GlycanCount[1])
                         {
                             strSub1 = this.Subtrees[0].GetIUPACString() + "-";
@@ -1269,7 +1353,8 @@ namespace COL.GlycoLib
             _IUPAC = strTree;
             return strTree;
         }
-        public string GetIUPACStringWithNodeID()
+          */
+       /* public string GetIUPACStringWithNodeID()
         {
             string strTree = "";
             string strSub1 = "";
@@ -1296,7 +1381,7 @@ namespace COL.GlycoLib
             }
             strTree = strSub1 + strSub2 + strSub3 + strSub4 + _NodeID.ToString()+","+_NodeType.ToString();
             return strTree;
-        }
+        }*/
         public string GetNodeIDCorrespondIUPAC()
         {
             string strTree = "";

@@ -12,7 +12,8 @@ namespace COL.MassLib
         private float _deisotopeMz;
         private float _fitScore;
         private float _mostIntseMass;
-
+        private double _clusterIntensity;
+        private double _mostIntseIntensity;
         /// <summary>
         /// Mass Scan
         /// </summary>
@@ -22,7 +23,7 @@ namespace COL.MassLib
         /// <param name="argDeisotopeMz"></param>
         /// <param name="argFixScore"></param>
         /// <param name="argMostIntenseMass"></param>
-        public MSPeak(float argMonoMass, float argMonoIntensity, float argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass)
+        public MSPeak(float argMonoMass, float argMonoIntensity, float argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass, double argMostIntenseIntensity)
         {
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
@@ -30,6 +31,27 @@ namespace COL.MassLib
             _deisotopeMz = argDeisotopeMz;
             _fitScore = argFixScore;
             _mostIntseMass = argMostIntenseMass;
+            _mostIntseIntensity = argMostIntenseIntensity;
+        }
+        /// <summary>
+        /// Mass Scan
+        /// </summary>
+        /// <param name="argMonoMass"></param>
+        /// <param name="argMonoIntensity"></param>
+        /// <param name="argChargeState"></param>
+        /// <param name="argDeisotopeMz"></param>
+        /// <param name="argFixScore"></param>
+        /// <param name="argMostIntenseMass"></param>
+        public MSPeak(float argMonoMass, float argMonoIntensity, float argChargeState, float argDeisotopeMz, float argFixScore, float argMostIntenseMass,double argMostIntenseIntensity, double argTotalClusterIntensity)
+        {
+            _monoMass = argMonoMass;
+            _monoIntemsity = argMonoIntensity;
+            _chargeState = argChargeState;
+            _deisotopeMz = argDeisotopeMz;
+            _fitScore = argFixScore;
+            _mostIntseMass = argMostIntenseMass;
+            _clusterIntensity = argTotalClusterIntensity;
+            _mostIntseIntensity = argMostIntenseIntensity;
         }
         /// <summary>
         /// Tendens Mass Scan
@@ -41,6 +63,10 @@ namespace COL.MassLib
             _monoMass = argMonoMass;
             _monoIntemsity = argMonoIntensity;
             _chargeState = 1.0f;
+        }
+        public double ClusterIntensity
+        {
+            get { return _clusterIntensity; }
         }
         public float MonoMass
         {
@@ -65,6 +91,10 @@ namespace COL.MassLib
         public float MostIntenseMass
         {
             get { return _mostIntseMass; }
+        }
+        public double MostIntenseIntensity
+        {
+            get { return _mostIntseIntensity; }
         }
         /// <summary>
         /// First peak of envelope

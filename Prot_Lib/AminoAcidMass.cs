@@ -42,7 +42,7 @@ namespace COL.ProtLib
             MWMapping.Add("MSO", 147.0354);
             MWMapping.Add("TPO", 202.0742);
             MWMapping.Add("HSL", 100.03985);
-            MWMapping.Add("H2O", 18.01532);
+            MWMapping.Add("H2O", 18.01056);
             AVGMWMapping = new Hashtable();
             AVGMWMapping.Add("A", 71.0788);
             AVGMWMapping.Add("R", 156.1875);

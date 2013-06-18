@@ -14,7 +14,7 @@ namespace TestApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmE3D());
+            Application.Run(new frmTest());
         }
     }
 }

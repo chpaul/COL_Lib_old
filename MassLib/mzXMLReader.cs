@@ -233,25 +233,25 @@ namespace COL.MassLib
                     // High resolution data
                     found = mobjTransform.FindPrecursorTransform(Convert.ToSingle(_parentBackgroundIntensity), Convert.ToSingle(min_peptide_intensity), ref _parentRawMzs, ref _parentRawIntensitys, ref _parentPeaks, Convert.ToSingle(scan.ParentMZ), ref _transformResult);
                 }
-                if (!found)
-                {
-                    // Low resolution data or bad high res spectra
-                    short cs = Raw.GetMonoChargeFromHeader(scan.ScanNo);
-                    if (cs > 0)
-                    {
-                        short[] charges = new short[1];
-                        charges[0] = cs;
-                        mobjTransform.AllocateValuesToTransform(Convert.ToSingle(scan.ParentMZ), ref charges, ref _transformResult);
-                    }
-                    else
-                    {
-                        // instrument has no charge just store 2 and 3.      
-                        short[] charges = new short[2];
-                        charges[0] = 2;
-                        charges[1] = 3;
-                        mobjTransform.AllocateValuesToTransform(Convert.ToSingle(scan.ParentMZ), ref charges, ref _transformResult);
-                    }
-                }
+                //if (!found) //de-isotope fail
+                //{
+                //    // Low resolution data or bad high res spectra
+                //    short cs = Raw.GetMonoChargeFromHeader(scan.ScanNo);
+                //    if (cs > 0)
+                //    {
+                //        short[] charges = new short[1];
+                //        charges[0] = cs;
+                //        mobjTransform.AllocateValuesToTransform(Convert.ToSingle(scan.ParentMZ), ref charges, ref _transformResult);
+                //    }
+                //    else
+                //    {
+                //        // instrument has no charge just store 2 and 3.      
+                //        short[] charges = new short[2];
+                //        charges[0] = 2;
+                //        charges[1] = 3;
+                //        mobjTransform.AllocateValuesToTransform(Convert.ToSingle(scan.ParentMZ), ref charges, ref _transformResult);
+                //    }
+                //}
                 scan.ParentMonoMW = (float)_transformResult[0].mdbl_mono_mw;
                 scan.ParentAVGMonoMW = (float)_transformResult[0].mdbl_average_mw;
                 scan.ParentCharge = (int)_transformResult[0].mshort_cs;
@@ -297,13 +297,28 @@ namespace COL.MassLib
 
                 for (int chNum = 0; chNum < _transformResult.Length; chNum++)
                 {
+                    double sumintensity = 0.0;
+                    double mostIntenseIntensity = 0.0;
+                    for (int i = 0; i < _transformResult[chNum].marr_isotope_peak_indices.Length; i++)
+                    {
+                        sumintensity = sumintensity + _cidPeaks[_transformResult[chNum].marr_isotope_peak_indices[i]].mdbl_intensity;
+                        if (Math.Abs(_transformResult[chNum].mdbl_most_intense_mw -
+                            (_cidPeaks[_transformResult[chNum].marr_isotope_peak_indices[i]].mdbl_mz * _transformResult[chNum].mshort_cs - Atoms.ProtonMass * _transformResult[chNum].mshort_cs)
+                            ) < 1.0 / _transformResult[chNum].mshort_cs
+                            )
+                        {
+                            mostIntenseIntensity = _cidPeaks[_transformResult[chNum].mint_peak_index].mdbl_intensity;
+                        }
+                    }
                     scan.MSPeaks.Add(new MSPeak(
                     Convert.ToSingle(_transformResult[chNum].mdbl_mono_mw),
                     _transformResult[chNum].mint_mono_intensity,
                     _transformResult[chNum].mshort_cs,
                     Convert.ToSingle(_transformResult[chNum].mdbl_mz),
                     Convert.ToSingle(_transformResult[chNum].mdbl_fit),
-                    Convert.ToSingle(_transformResult[chNum].mdbl_most_intense_mw)));
+                    Convert.ToSingle(_transformResult[chNum].mdbl_most_intense_mw),
+                    mostIntenseIntensity,
+                    sumintensity));
                 }
                 Array.Clear(_transformResult, 0, _transformResult.Length);
                 Array.Clear(_cidPeaks, 0, _cidPeaks.Length);

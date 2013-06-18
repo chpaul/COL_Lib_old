@@ -21,7 +21,8 @@ namespace COL.MassLib
         private float _minMZ;
         private float _maxMZ;
         private string _scanHeader;
-
+        bool _isCIDScan;
+        bool _isFTScan;
         public MSScan()
         {
             _lstMsPeak = new List<MSPeak>();
@@ -102,6 +103,16 @@ namespace COL.MassLib
                 }
                 return null;
             }
+        }
+        public bool IsCIDScan
+        {
+            get { return _isCIDScan; }
+            set { _isCIDScan = value; }
+        }
+        public bool IsFTScan
+        {
+            get { return _isFTScan; }
+            set { _isFTScan = value; }
         }
         public string ScanHeader
         {

@@ -140,13 +140,13 @@ namespace COL.GlycoLib
         {
             get {
                 if (_IUPAC == "")
-                {
-                    _IUPAC = _tree.GetIUPACString();
+                {                    
+                    _IUPAC = _tree.GetIUPACString(); 
                 }
-
                 return _IUPAC;
             }
         }
+     
         public float GlycanMZ
         {
             get

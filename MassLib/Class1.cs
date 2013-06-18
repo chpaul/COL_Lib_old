@@ -128,7 +128,7 @@ namespace COL.MassLib
                 {
                     short[] charges = new short[1];
                     charges[0] = cs;
-                    Transform.AllocateValuesToTransform(Convert.ToSingle(_parentMz), ref charges, ref _transformResult);
+                    Transform.AllocateValuesToTransform(Convert.ToSingle(_parentMz),500, ref charges, ref _transformResult);
 
                 }
                 else
@@ -137,7 +137,7 @@ namespace COL.MassLib
                     short[] charges = new short[2];
                     charges[0] = 2;
                     charges[1] = 3;
-                    Transform.AllocateValuesToTransform(Convert.ToSingle(_parentMz), ref charges, ref _transformResult);
+                    Transform.AllocateValuesToTransform(Convert.ToSingle(_parentMz), 500,ref charges, ref _transformResult);
                 }
             }
 
