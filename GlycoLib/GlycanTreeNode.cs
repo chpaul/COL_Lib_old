@@ -119,6 +119,7 @@ namespace COL.GlycoLib
                     }
                 }
             }
+            GlycanQue = null;
             foreach (GlycanTreeNode g in glycanOrder)
             {
                 yield return g;
