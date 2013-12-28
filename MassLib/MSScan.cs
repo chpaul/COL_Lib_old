@@ -5,6 +5,7 @@ using System.Text;
 
 namespace COL.MassLib
 {
+    [Serializable]
     public class MSScan : ICloneable
     {
         private List<MSPeak> _lstMsPeak;

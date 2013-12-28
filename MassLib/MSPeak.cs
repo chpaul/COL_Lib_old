@@ -4,6 +4,7 @@ using System.Text;
 
 namespace COL.MassLib
 {
+    [Serializable]
     public class MSPeak : IComparable<MSPeak>
     {
         private float _monoMass; //First peak

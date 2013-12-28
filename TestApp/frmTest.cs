@@ -38,7 +38,7 @@ namespace TestApp
         private void btnReader_Click(object sender, EventArgs e)
         {
 
-            ReadScan(Convert.ToInt32(txtScanNo.Text));
+            //ReadScan(Convert.ToInt32(txtScanNo.Text));
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace TestApp
                 txtFileName.Text = openFileDialog1.FileName;
             }
         }
-        private void ReadScan(int argScanNo)
+        /*private void ReadScan(int argScanNo)
         {
             XRawReader raw = new XRawReader(txtFileName.Text);
             //Class1 cs = new Class1(txtFileName.Text, 1861);
@@ -92,18 +92,18 @@ namespace TestApp
                 DT.Rows.Add(row);
             }
             
-        }
+        }*/
 
-        private void btnIncreaseScanNo_Click(object sender, EventArgs e)
-        {
-            txtScanNo.Text = (Convert.ToInt32(txtScanNo.Text) + 1).ToString();
-            ReadScan(Convert.ToInt32(txtScanNo.Text));
-        }
+        //private void btnIncreaseScanNo_Click(object sender, EventArgs e)
+        //{
+        //    txtScanNo.Text = (Convert.ToInt32(txtScanNo.Text) + 1).ToString();
+        //    ReadScan(Convert.ToInt32(txtScanNo.Text));
+        //}
 
-        private void btnDecreaseScanNo_Click(object sender, EventArgs e)
-        {
-            txtScanNo.Text = (Convert.ToInt32(txtScanNo.Text) -1).ToString();
-            ReadScan(Convert.ToInt32(txtScanNo.Text));
-        }
+        //private void btnDecreaseScanNo_Click(object sender, EventArgs e)
+        //{
+        //    txtScanNo.Text = (Convert.ToInt32(txtScanNo.Text) -1).ToString();
+        //    ReadScan(Convert.ToInt32(txtScanNo.Text));
+        //}
     }
 }

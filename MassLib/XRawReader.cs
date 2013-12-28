@@ -68,7 +68,7 @@ namespace COL.MassLib
         //}
         public void SetTransformParameter(GlypID.HornTransform.clsHornTransformParameters argTransformParameter)
         {
-            _peakBackgroundRatio = argTransformParameter.PeptideMinBackgroundRatio;
+            _peptideMinBackgroundRatio = argTransformParameter.PeptideMinBackgroundRatio;
             _maxCharge = argTransformParameter.MaxCharge;
         }
         public int GetMsLevel(int argScan)

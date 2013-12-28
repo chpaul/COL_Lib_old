@@ -10,13 +10,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TestApp</RootNamespace>
     <AssemblyName>TestApp</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,9 +54,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GlypIDEngine">
-      <HintPath>..\..\..\!IncludeFiles\GlypIDEngine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -75,11 +74,11 @@
     <Compile Include="frmE3D.Designer.cs">
       <DependentUpon>frmE3D.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTest.cs">
+    <Compile Include="frmNamePipeReader.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTest.Designer.cs">
-      <DependentUpon>frmTest.cs</DependentUpon>
+    <Compile Include="frmNamePipeReader.Designer.cs">
+      <DependentUpon>frmNamePipeReader.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,9 +89,8 @@
     <EmbeddedResource Include="frmE3D.resx">
       <DependentUpon>frmE3D.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTest.resx">
-      <DependentUpon>frmTest.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="frmNamePipeReader.resx">
+      <DependentUpon>frmNamePipeReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -104,6 +102,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -116,19 +115,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ElutionViewer\ElutionViewer.csproj">
-      <Project>{9911254B-F7D5-426F-AD5A-1A786572A349}</Project>
+      <Project>{9911254b-f7d5-426f-ad5a-1a786572a349}</Project>
       <Name>ElutionViewer</Name>
     </ProjectReference>
     <ProjectReference Include="..\GlycoLib\GlycoLib.csproj">
-      <Project>{F491280E-32DE-4EC8-97AD-BEBB8EEF8722}</Project>
+      <Project>{f491280e-32de-4ec8-97ad-bebb8eef8722}</Project>
       <Name>GlycoLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\MassLib\MassLib.csproj">
-      <Project>{A9AF2446-C02A-4D05-BBE5-7E823BD073AF}</Project>
+      <Project>{a9af2446-c02a-4d05-bbe5-7e823bd073af}</Project>
       <Name>MassLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Prot_Lib\ProtLib.csproj">
-      <Project>{C35DFA3F-CB11-41FB-80C6-A49231D2B413}</Project>
+      <Project>{c35dfa3f-cb11-41fb-80c6-a49231d2b413}</Project>
       <Name>ProtLib</Name>
     </ProjectReference>
   </ItemGroup>
