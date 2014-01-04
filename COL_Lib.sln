@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassLib", "MassLib\MassLib.csproj", "{A9AF2446-C02A-4D05-BBE5-7E823BD073AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlycoLib", "GlycoLib\GlycoLib.csproj", "{F491280E-32DE-4EC8-97AD-BEBB8EEF8722}"
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{B8B4E9CF-2626-45C1-AD79-E2DB457C92F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElutionViewer", "ElutionViewer\ElutionViewer.csproj", "{9911254B-F7D5-426F-AD5A-1A786572A349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlypIDWrapper", "GlypIDWrapper\GlypIDWrapper.csproj", "{7A6BB824-6E37-457F-9356-566F393201D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,12 @@ Global
 		{9911254B-F7D5-426F-AD5A-1A786572A349}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9911254B-F7D5-426F-AD5A-1A786572A349}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9911254B-F7D5-426F-AD5A-1A786572A349}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A6BB824-6E37-457F-9356-566F393201D8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7A6BB824-6E37-457F-9356-566F393201D8}.Debug|Any CPU.Build.0 = Debug|x86
+		{7A6BB824-6E37-457F-9356-566F393201D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A6BB824-6E37-457F-9356-566F393201D8}.Release|Any CPU.ActiveCfg = Release|x86
+		{7A6BB824-6E37-457F-9356-566F393201D8}.Release|Any CPU.Build.0 = Release|x86
+		{7A6BB824-6E37-457F-9356-566F393201D8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
